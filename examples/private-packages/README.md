@@ -1,6 +1,6 @@
 # Private packages with Docker build secrets
 
-Recipe: https://www.js-on-k8s.dev/recipes/container-images/build-secrets/
+Recipe: https://js-on-k8s.dev/recipes/container-images/build-secrets/
 
 The `.npmrc` here references `${NPM_TOKEN}` and is safe to commit. The token is
 passed as a BuildKit secret and exists only during `npm ci`.

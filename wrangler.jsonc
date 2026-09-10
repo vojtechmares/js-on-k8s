@@ -15,8 +15,8 @@
   "workers_dev": false,
   "preview_urls": true,
   "routes": [
-    { "pattern": "www.js-on-k8s.dev", "custom_domain": true },
-    { "pattern": "js-on-k8s.dev", "custom_domain": true }
+    { "pattern": "js-on-k8s.dev", "custom_domain": true },
+    { "pattern": "www.js-on-k8s.dev", "custom_domain": true }
   ],
   "observability": {
     "enabled": true

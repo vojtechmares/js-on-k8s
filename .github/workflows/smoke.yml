@@ -21,6 +21,6 @@ jobs:
       - uses: gacts/install-hurl@v1
       - name: Wait for the deploy of this commit
         if: github.event_name == 'push'
-        run: hurl --test --variable base=https://www.js-on-k8s.dev --variable sha=${{ github.sha }} tests/version.hurl
+        run: hurl --test --variable base=https://js-on-k8s.dev --variable sha=${{ github.sha }} tests/version.hurl
       - name: Smoke test production
-        run: hurl --test --variable base=https://www.js-on-k8s.dev tests/smoke.hurl tests/domains.hurl
+        run: hurl --test --variable base=https://js-on-k8s.dev tests/smoke.hurl tests/domains.hurl

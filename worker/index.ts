@@ -13,8 +13,8 @@ interface Env {
   ASSETS: Fetcher;
 }
 
-const CANONICAL_HOST = 'www.js-on-k8s.dev';
-const REDIRECT_HOSTS = new Set(['js-on-k8s.dev']);
+const CANONICAL_HOST = 'js-on-k8s.dev';
+const REDIRECT_HOSTS = new Set(['www.js-on-k8s.dev']);
 
 type MediaRange = { type: string; subtype: string; q: number; index: number };
 

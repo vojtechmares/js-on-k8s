@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
 # Recipes:
-#   https://www.js-on-k8s.dev/recipes/container-images/dockerfile/
-#   https://www.js-on-k8s.dev/recipes/container-images/distroless-image/
-#   https://www.js-on-k8s.dev/recipes/run-node-directly/
+#   https://js-on-k8s.dev/recipes/container-images/dockerfile/
+#   https://js-on-k8s.dev/recipes/container-images/distroless-image/
+#   https://js-on-k8s.dev/recipes/run-node-directly/
 
 # --- build stage: install production dependencies ---------------------------
 FROM node:24-bookworm-slim AS build

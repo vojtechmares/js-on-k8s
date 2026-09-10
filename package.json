@@ -13,7 +13,7 @@
     "deploy": "astro build && wrangler deploy",
     "og": "node scripts/og.mjs",
     "astro": "astro",
-    "smoke": "hurl --test --variable base=https://www.js-on-k8s.dev tests/smoke.hurl tests/domains.hurl",
+    "smoke": "hurl --test --variable base=https://js-on-k8s.dev tests/smoke.hurl tests/domains.hurl",
     "smoke:local": "hurl --test --variable base=http://localhost:8787 tests/smoke.hurl"
   },
   "dependencies": {
@@ -32,7 +32,7 @@
     "typescript": "^7.0.2",
     "wrangler": "^4.126.0"
   },
-  "description": "Source of www.js-on-k8s.dev - recipes for running Node.js on Kubernetes",
+  "description": "Source of js-on-k8s.dev - recipes for running Node.js on Kubernetes",
   "license": "MIT",
   "packageManager": "pnpm@11.5.2"
 }

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.js-on-k8s.dev/sitemap-index.xml
+Sitemap: https://js-on-k8s.dev/sitemap-index.xml

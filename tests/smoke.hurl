@@ -1,5 +1,5 @@
 # Smoke test: humans get HTML, agents get Markdown, SEO files exist.
-# Run against any deployment:  hurl --variable base=https://www.js-on-k8s.dev tests/smoke.hurl
+# Run against any deployment:  hurl --variable base=https://js-on-k8s.dev tests/smoke.hurl
 # Against a local preview:     hurl --variable base=http://localhost:8787 tests/smoke.hurl
 
 # --- Humans: a browser gets HTML ----------------------------------------------
@@ -10,7 +10,7 @@ HTTP 200
 header "Content-Type" == "text/html; charset=utf-8"
 header "Vary" contains "Accept"
 xpath "string(//title)" == "JavaScript on Kubernetes (js-on-k8s)"
-xpath "string(//link[@rel='canonical']/@href)" == "https://www.js-on-k8s.dev/"
+xpath "string(//link[@rel='canonical']/@href)" == "https://js-on-k8s.dev/"
 xpath "string(//link[@rel='alternate'][@type='text/markdown']/@href)" == "/index.md"
 xpath "count(//script[@type='application/ld+json'])" >= 1
 body contains "Recipes"
@@ -32,7 +32,7 @@ header "Content-Type" == "text/markdown; charset=utf-8"
 header "Content-Location" == "/index.md"
 header "Vary" contains "Accept"
 body startsWith "# JavaScript on Kubernetes"
-body contains "- Canonical: https://www.js-on-k8s.dev/"
+body contains "- Canonical: https://js-on-k8s.dev/"
 body contains "## Recipes"
 
 GET {{base}}/recipes/graceful-shutdown/
@@ -52,7 +52,7 @@ HTTP 200
 [Asserts]
 header "Content-Type" == "text/markdown; charset=utf-8"
 header "Content-Location" == "/recipes/graceful-shutdown/express.md"
-body contains "- Part of: https://www.js-on-k8s.dev/recipes/graceful-shutdown/"
+body contains "- Part of: https://js-on-k8s.dev/recipes/graceful-shutdown/"
 
 # Recipes index has its own twin.
 GET {{base}}/recipes/
@@ -105,26 +105,26 @@ GET {{base}}/robots.txt
 HTTP 200
 [Asserts]
 header "Content-Type" contains "text/plain"
-body contains "Sitemap: https://www.js-on-k8s.dev/sitemap-index.xml"
+body contains "Sitemap: https://js-on-k8s.dev/sitemap-index.xml"
 
 GET {{base}}/sitemap-index.xml
 HTTP 200
 [Asserts]
 header "Content-Type" contains "xml"
-body contains "https://www.js-on-k8s.dev/sitemap-0.xml"
+body contains "https://js-on-k8s.dev/sitemap-0.xml"
 
 GET {{base}}/sitemap-0.xml
 HTTP 200
 [Asserts]
-body contains "<loc>https://www.js-on-k8s.dev/</loc>"
-body contains "<loc>https://www.js-on-k8s.dev/recipes/graceful-shutdown/express/</loc>"
+body contains "<loc>https://js-on-k8s.dev/</loc>"
+body contains "<loc>https://js-on-k8s.dev/recipes/graceful-shutdown/express/</loc>"
 
 GET {{base}}/llms.txt
 HTTP 200
 [Asserts]
 header "Content-Type" contains "text/plain"
 body startsWith "# JavaScript on Kubernetes"
-body contains "https://www.js-on-k8s.dev/recipes/index.md"
+body contains "https://js-on-k8s.dev/recipes/index.md"
 
 GET {{base}}/og.png
 HTTP 200

@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Recipe: https://www.js-on-k8s.dev/recipes/telemetry/
+# Recipe: https://js-on-k8s.dev/recipes/telemetry/
 FROM node:24-bookworm-slim AS build
 WORKDIR /app
 ENV NODE_ENV=production

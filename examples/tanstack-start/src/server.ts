@@ -1,4 +1,4 @@
-// Recipe: https://www.js-on-k8s.dev/recipes/graceful-shutdown/tanstack-start/
+// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown/tanstack-start/
 // Evaluated once at startup. Nitro keeps its own SIGTERM handler, which drains
 // in-flight requests (NITRO_SHUTDOWN_TIMEOUT) and exits; this runs alongside it.
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";

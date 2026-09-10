@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.js-on-k8s.dev',
+  site: 'https://js-on-k8s.dev',
   trailingSlash: 'always',
   build: {
     format: 'directory',

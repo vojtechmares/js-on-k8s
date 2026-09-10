@@ -1,4 +1,4 @@
-// Recipe: https://www.js-on-k8s.dev/recipes/graceful-shutdown-fastify/
+// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-fastify/
 import Fastify from "fastify";
 
 const app = Fastify({ logger: true, forceCloseConnections: "idle" });

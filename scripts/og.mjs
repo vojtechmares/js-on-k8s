@@ -26,7 +26,7 @@ const svg = `
   <text x="80" y="385" font-size="30" fill="#27272a">JavaScript on Kubernetes</text>
   <text x="80" y="435" font-size="22" fill="#52525b">Recipes for running Node.js on Kubernetes.</text>
   <text x="80" y="470" font-size="22" fill="#52525b">Images, signals, probes, manifests, Helm, Kustomize.</text>
-  <text x="80" y="540" font-size="20" fill="#1d4ed8">www.js-on-k8s.dev</text>
+  <text x="80" y="540" font-size="20" fill="#1d4ed8">js-on-k8s.dev</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile(path.join(root, 'public/og.png'));

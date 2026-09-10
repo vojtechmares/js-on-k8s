@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Recipe: https://www.js-on-k8s.dev/recipes/container-images/tanstack-start/
+# Recipe: https://js-on-k8s.dev/recipes/container-images/tanstack-start/
 FROM node:24-bookworm-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json ./

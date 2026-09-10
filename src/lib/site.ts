@@ -1,7 +1,7 @@
 export const SITE = {
   name: 'JavaScript on Kubernetes',
   short: 'js-on-k8s',
-  url: 'https://www.js-on-k8s.dev',
+  url: 'https://js-on-k8s.dev',
   description:
     'Practical recipes for running Node.js and JavaScript applications on Kubernetes: container images, graceful shutdown, health checks, manifests, Helm, Kustomize.',
   repo: 'https://github.com/vojtechmares/js-on-k8s',

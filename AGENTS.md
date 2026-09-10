@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Source of https://www.js-on-k8s.dev - a single-page docs site plus recipes about running Node.js on Kubernetes.
+Source of https://js-on-k8s.dev - a single-page docs site plus recipes about running Node.js on Kubernetes.
 
 ## Stack
 

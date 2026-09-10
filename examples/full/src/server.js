@@ -1,4 +1,4 @@
-// A small HTTP service that applies every recipe from https://www.js-on-k8s.dev
+// A small HTTP service that applies every recipe from https://js-on-k8s.dev
 //
 // - started directly with `node src/server.js` (no npm in between)
 // - /healthz for liveness, /readyz for readiness
@@ -18,7 +18,7 @@ let inFlight = 0;
 
 // Overload protection: shed requests and fail readiness when the event loop
 // falls behind or too many requests are in flight.
-// Recipe: https://www.js-on-k8s.dev/recipes/probes/
+// Recipe: https://js-on-k8s.dev/recipes/probes/
 const loop = monitorEventLoopDelay({ resolution: 20 });
 loop.enable();
 const overloaded = () =>

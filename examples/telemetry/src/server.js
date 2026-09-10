@@ -1,5 +1,5 @@
 // Plain HTTP service instrumented with OpenTelemetry via --import.
-// Recipe: https://www.js-on-k8s.dev/recipes/telemetry/
+// Recipe: https://js-on-k8s.dev/recipes/telemetry/
 import { createServer } from "node:http";
 import pino from "pino";
 

@@ -1,6 +1,6 @@
 # JavaScript on Kubernetes
 
-Source of [www.js-on-k8s.dev](https://www.js-on-k8s.dev): short, focused recipes for running Node.js on Kubernetes.
+Source of [js-on-k8s.dev](https://js-on-k8s.dev): short, focused recipes for running Node.js on Kubernetes.
 
 ## Layout
 
@@ -55,9 +55,9 @@ Keep it to one screen, put the copy-paste snippet first, explanations after.
 Every page is available as Markdown:
 
 ```sh
-curl -H 'Accept: text/markdown' https://www.js-on-k8s.dev/recipes/graceful-shutdown/
-curl https://www.js-on-k8s.dev/recipes/graceful-shutdown.md
-curl https://www.js-on-k8s.dev/llms.txt
+curl -H 'Accept: text/markdown' https://js-on-k8s.dev/recipes/graceful-shutdown/
+curl https://js-on-k8s.dev/recipes/graceful-shutdown.md
+curl https://js-on-k8s.dev/llms.txt
 ```
 
 Astro builds the `.md` files; the Worker in `worker/index.ts` picks them when
@@ -82,9 +82,9 @@ that commit, then runs the suite against production, and again daily.
 ## Deploy
 
 The site is a Cloudflare Worker with static assets. `wrangler.jsonc` declares
-`www.js-on-k8s.dev` and `js-on-k8s.dev` as custom domains, so the first deploy
-creates the DNS records and certificates in the zone automatically. The apex
-redirects to `www`; `workers.dev` is disabled.
+`js-on-k8s.dev` and `js-on-k8s.dev` as custom domains, so the first deploy
+creates the DNS records and certificates in the zone automatically. `www`
+redirects to the apex; `workers.dev` is disabled.
 
 Deploys run on Cloudflare Workers Builds, connected to this GitHub repository:
 every push to `main` builds with `pnpm build` and runs `wrangler deploy`, and

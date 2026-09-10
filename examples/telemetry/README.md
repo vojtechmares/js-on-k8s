@@ -1,6 +1,6 @@
 # Telemetry example
 
-Recipe: https://www.js-on-k8s.dev/recipes/telemetry/
+Recipe: https://js-on-k8s.dev/recipes/telemetry/
 
 ```sh
 npm ci
