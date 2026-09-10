@@ -69,16 +69,18 @@ Astro builds the `.md` files; the Worker in `worker/index.ts` picks them when
 The site is a Cloudflare Worker with static assets. `wrangler.jsonc` declares
 `www.js-on-k8s.dev` and `js-on-k8s.dev` as custom domains, so the first deploy
 creates the DNS records and certificates in the zone automatically. The apex
-redirects to `www`.
+redirects to `www`; `workers.dev` is disabled.
+
+Deploys run on Cloudflare Workers Builds, connected to this GitHub repository:
+every push to `main` builds with `pnpm build` and runs `wrangler deploy`, and
+pull requests get preview URLs (marked `noindex`). `.github/workflows/ci.yml`
+only checks the build.
+
+Manual deploy from a machine with `wrangler login`:
 
 ```sh
-pnpm build
-pnpm deploy         # wrangler deploy
+pnpm deploy         # astro build && wrangler deploy
 ```
-
-`.github/workflows/deploy.yml` deploys on every push to `main`. It needs two
-repository secrets: `CLOUDFLARE_API_TOKEN` (Workers Scripts: Edit, Workers Routes: Edit,
-Zone DNS: Edit for js-on-k8s.dev) and `CLOUDFLARE_ACCOUNT_ID`.
 
 ## License
 

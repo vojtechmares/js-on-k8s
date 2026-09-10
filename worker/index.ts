@@ -119,11 +119,13 @@ export default {
 
     const res = await env.ASSETS.fetch(request);
     const type = res.headers.get('content-type') ?? '';
+    // Preview URLs and any other host: serve, but keep search engines on the canonical host.
+    const extra: Record<string, string> = url.hostname === CANONICAL_HOST ? {} : { 'X-Robots-Tag': 'noindex' };
     if (res.ok && url.pathname.endsWith('.md')) {
-      return withHeaders(res, { 'Content-Type': 'text/markdown; charset=utf-8' });
+      return withHeaders(res, { 'Content-Type': 'text/markdown; charset=utf-8', ...extra });
     }
     if (type.startsWith('text/html')) {
-      return withHeaders(res, {});
+      return withHeaders(res, extra);
     }
     return res;
   },
