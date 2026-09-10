@@ -1,3 +1,6 @@
+# pnpm 10 (the Cloudflare Workers Builds default) requires a packages list even for a single-package repo.
+packages:
+  - .
 allowBuilds:
   esbuild: true
   sharp: true

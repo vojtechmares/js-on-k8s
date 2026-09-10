@@ -31,5 +31,6 @@
     "wrangler": "^4.126.0"
   },
   "description": "Source of www.js-on-k8s.dev - recipes for running Node.js on Kubernetes",
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "pnpm@11.5.2"
 }
