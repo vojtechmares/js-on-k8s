@@ -96,8 +96,9 @@ export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
 
-    if (REDIRECT_HOSTS.has(url.hostname)) {
-      url.hostname = CANONICAL_HOST;
+    if (REDIRECT_HOSTS.has(url.hostname) || url.protocol === 'http:') {
+      if (REDIRECT_HOSTS.has(url.hostname)) url.hostname = CANONICAL_HOST;
+      url.protocol = 'https:';
       return Response.redirect(url.toString(), 301);
     }
 
@@ -125,7 +126,7 @@ export default {
       return withHeaders(res, { 'Content-Type': 'text/markdown; charset=utf-8', ...extra });
     }
     if (type.startsWith('text/html')) {
-      return withHeaders(res, extra);
+      return withHeaders(res, { 'Content-Type': 'text/html; charset=utf-8', ...extra });
     }
     return res;
   },
