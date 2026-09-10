@@ -16,7 +16,7 @@ xpath "count(//script[@type='application/ld+json'])" >= 1
 body contains "Recipes"
 
 # No Accept header at all: HTML.
-GET {{base}}/recipes/graceful-shutdown/
+GET {{base}}/recipes/graceful-shutdown
 HTTP 200
 [Asserts]
 header "Content-Type" == "text/html; charset=utf-8"
@@ -35,7 +35,7 @@ body startsWith "# JavaScript on Kubernetes"
 body contains "- Canonical: https://js-on-k8s.dev/"
 body contains "## Recipes"
 
-GET {{base}}/recipes/graceful-shutdown/
+GET {{base}}/recipes/graceful-shutdown
 Accept: text/markdown, text/html;q=0.9
 HTTP 200
 [Asserts]
@@ -46,32 +46,32 @@ body contains "```js"
 body contains "## In this section"
 
 # Nested recipe, wildcard fallback still prefers markdown.
-GET {{base}}/recipes/graceful-shutdown/express/
+GET {{base}}/recipes/graceful-shutdown/express
 Accept: text/markdown, */*;q=0.1
 HTTP 200
 [Asserts]
 header "Content-Type" == "text/markdown; charset=utf-8"
 header "Content-Location" == "/recipes/graceful-shutdown/express.md"
-body contains "- Part of: https://js-on-k8s.dev/recipes/graceful-shutdown/"
+body contains "- Part of: https://js-on-k8s.dev/recipes/graceful-shutdown"
 
 # Recipes index has its own twin.
-GET {{base}}/recipes/
+GET {{base}}/recipes
 Accept: text/markdown
 HTTP 200
 [Asserts]
 header "Content-Type" == "text/markdown; charset=utf-8"
-header "Content-Location" == "/recipes/index.md"
+header "Content-Location" == "/recipes.md"
 body contains "### Build"
 
 # Explicit rejection of markdown: HTML.
-GET {{base}}/recipes/graceful-shutdown/
+GET {{base}}/recipes/graceful-shutdown
 Accept: text/markdown;q=0, */*
 HTTP 200
 [Asserts]
 header "Content-Type" == "text/html; charset=utf-8"
 
 # No preference expressed: HTML.
-GET {{base}}/recipes/graceful-shutdown/
+GET {{base}}/recipes/graceful-shutdown
 Accept: */*
 HTTP 200
 [Asserts]
@@ -85,10 +85,10 @@ header "Content-Type" == "text/markdown; charset=utf-8"
 body startsWith "# A minimal multi-stage Dockerfile"
 
 # --- Routing ------------------------------------------------------------------
-GET {{base}}/recipes/probes
+GET {{base}}/recipes/probes/
 HTTP 307
 [Asserts]
-header "Location" endsWith "/recipes/probes/"
+header "Location" endsWith "/recipes/probes"
 
 GET {{base}}/this-page-does-not-exist/
 HTTP 404
@@ -116,15 +116,15 @@ body contains "https://js-on-k8s.dev/sitemap-0.xml"
 GET {{base}}/sitemap-0.xml
 HTTP 200
 [Asserts]
-body contains "<loc>https://js-on-k8s.dev/</loc>"
-body contains "<loc>https://js-on-k8s.dev/recipes/graceful-shutdown/express/</loc>"
+body contains "<loc>https://js-on-k8s.dev</loc>"
+body contains "<loc>https://js-on-k8s.dev/recipes/graceful-shutdown/express</loc>"
 
 GET {{base}}/llms.txt
 HTTP 200
 [Asserts]
 header "Content-Type" contains "text/plain"
 body startsWith "# JavaScript on Kubernetes"
-body contains "https://js-on-k8s.dev/recipes/index.md"
+body contains "https://js-on-k8s.dev/recipes.md"
 
 GET {{base}}/og.png
 HTTP 200

@@ -34,7 +34,7 @@ spec:
       targetPort: http   # the container port name, not a number
 ```
 
-The Service only routes to Pods whose [readiness probe](/recipes/probes/) passes.
+The Service only routes to Pods whose [readiness probe](/recipes/probes) passes.
 Inside the cluster the app is now `http://app.<namespace>.svc`.
 
 ## Ingress

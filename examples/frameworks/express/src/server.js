@@ -1,4 +1,4 @@
-// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-express/
+// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-express
 import express from "express";
 
 const app = express();

@@ -1,5 +1,5 @@
 // Every setting comes from the environment. Fail fast on missing values.
-// Recipe: https://js-on-k8s.dev/recipes/config-from-environment/
+// Recipe: https://js-on-k8s.dev/recipes/config-from-environment
 
 const required = (name) => {
   const value = process.env[name];

@@ -13,9 +13,11 @@ interface Props {
 }
 
 const { title, description, jsonLd = [], ogType = 'website', updated } = Astro.props;
-const canonical = new URL(Astro.url.pathname, SITE.url).toString();
-const mdHref = markdownPath(Astro.url.pathname);
-const fullTitle = Astro.url.pathname === '/' ? `${SITE.name} (${SITE.short})` : `${title} - ${SITE.short}`;
+// With build.format 'file' the build-time pathname carries the .html suffix; the served URL does not.
+const pathname = Astro.url.pathname.replace(/(?:\/index)?\.html$/, '') || '/';
+const canonical = new URL(pathname, SITE.url).toString();
+const mdHref = markdownPath(pathname);
+const fullTitle = pathname === '/' ? `${SITE.name} (${SITE.short})` : `${title} - ${SITE.short}`;
 const ogImage = new URL('/og.png', SITE.url).toString();
 const year = new Date().getFullYear();
 ---
@@ -61,7 +63,7 @@ const year = new Date().getFullYear();
         </a>
         <nav class="rule-double mt-4 text-sm" aria-label="Main">
           <span class="text-zinc-400">[</span> <a href="/" class="underline underline-offset-4 hover:bg-blue-100">home</a> <span class="text-zinc-400">]</span>{' '}
-          <span class="text-zinc-400">[</span> <a href="/recipes/" class="underline underline-offset-4 hover:bg-blue-100">recipes</a> <span class="text-zinc-400">]</span>{' '}
+          <span class="text-zinc-400">[</span> <a href="/recipes" class="underline underline-offset-4 hover:bg-blue-100">recipes</a> <span class="text-zinc-400">]</span>{' '}
           <span class="text-zinc-400">[</span> <a href={SITE.repo} class="underline underline-offset-4 hover:bg-blue-100" rel="noopener">github</a> <span class="text-zinc-400">]</span>{' '}
           <span class="text-zinc-400">[</span> <a href={mdHref} class="underline underline-offset-4 hover:bg-blue-100" title="This page as Markdown">.md</a> <span class="text-zinc-400">]</span>
         </nav>

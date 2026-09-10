@@ -55,7 +55,7 @@ Keep it to one screen, put the copy-paste snippet first, explanations after.
 Every page is available as Markdown:
 
 ```sh
-curl -H 'Accept: text/markdown' https://js-on-k8s.dev/recipes/graceful-shutdown/
+curl -H 'Accept: text/markdown' https://js-on-k8s.dev/recipes/graceful-shutdown
 curl https://js-on-k8s.dev/recipes/graceful-shutdown.md
 curl https://js-on-k8s.dev/llms.txt
 ```

@@ -125,5 +125,5 @@ containers:
 
 - Liveness with `failureThreshold: 3` and `periodSeconds: 10` restarts after 30 s of silence. Do not make it faster.
 - Do not log probe requests. They drown the real traffic.
-- Flip readiness to 503 as the first step of [graceful shutdown](/recipes/graceful-shutdown/).
-- Probes run from the kubelet on the node, not through the Service. A `NetworkPolicy` must not block them; see [networking](/recipes/networking/).
+- Flip readiness to 503 as the first step of [graceful shutdown](/recipes/graceful-shutdown).
+- Probes run from the kubelet on the node, not through the Service. A `NetworkPolicy` must not block them; see [networking](/recipes/networking).

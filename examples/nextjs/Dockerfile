@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Recipe: https://js-on-k8s.dev/recipes/container-images/nextjs/
+# Recipe: https://js-on-k8s.dev/recipes/container-images/nextjs
 FROM node:24-bookworm-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./

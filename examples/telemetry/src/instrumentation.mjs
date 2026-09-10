@@ -1,7 +1,7 @@
 // Manual OpenTelemetry setup, for when you need control over instrumentations,
 // sampling or processors. Load with: node --import ./src/instrumentation.mjs src/server.js
 // Exporters still come from OTEL_* env vars (OTLP by default).
-// Recipe: https://js-on-k8s.dev/recipes/telemetry/
+// Recipe: https://js-on-k8s.dev/recipes/telemetry
 import { register } from "node:module";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";

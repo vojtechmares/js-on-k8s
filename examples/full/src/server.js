@@ -18,7 +18,7 @@ let inFlight = 0;
 
 // Overload protection: shed requests and fail readiness when the event loop
 // falls behind or too many requests are in flight.
-// Recipe: https://js-on-k8s.dev/recipes/probes/
+// Recipe: https://js-on-k8s.dev/recipes/probes
 const loop = monitorEventLoopDelay({ resolution: 20 });
 loop.enable();
 const overloaded = () =>

@@ -40,4 +40,4 @@ process.on("SIGINT", () => shutdown("SIGINT"));
 - Do not keep the `app.listen()` return value in a variable you never use. It is the only handle you get.
 - Close database pools in the `server.close()` callback, before `process.exit()`.
 - Express 5 handles rejected promises in async handlers. On Express 4 add an error middleware, or an unhandled rejection on shutdown can mask the exit code.
-- The signal handling, timeouts and Pod spec are the same as in [graceful shutdown](/recipes/graceful-shutdown/).
+- The signal handling, timeouts and Pod spec are the same as in [graceful shutdown](/recipes/graceful-shutdown).

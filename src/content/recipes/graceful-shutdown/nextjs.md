@@ -60,5 +60,5 @@ containers:
 ## Notes
 
 - Need asynchronous cleanup, such as draining a queue? Set `NEXT_MANUAL_SIG_HANDLE=true`. Next.js then installs no handlers and you own the whole shutdown, including calling `process.exit()`.
-- `next start` and the standalone `server.js` behave the same way. `npm run start` in the image does not: see [run node directly](/recipes/run-node-directly/).
-- Containerizing Next.js is its own recipe: [Containerize a Next.js app](/recipes/container-images/nextjs/).
+- `next start` and the standalone `server.js` behave the same way. `npm run start` in the image does not: see [run node directly](/recipes/run-node-directly).
+- Containerizing Next.js is its own recipe: [Containerize a Next.js app](/recipes/container-images/nextjs).

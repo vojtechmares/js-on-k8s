@@ -14,7 +14,7 @@ export const GET: APIRoute = async () => {
     '## Pages',
     '',
     `- [Home](${SITE.url}/index.md): overview and principles`,
-    `- [Recipes](${SITE.url}/recipes/index.md): list of all recipes`,
+    `- [Recipes](${SITE.url}/recipes.md): list of all recipes`,
     '',
     '## Recipes',
     '',

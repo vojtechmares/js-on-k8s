@@ -129,7 +129,7 @@ export async function recipesIndexMarkdown(): Promise<string> {
     '',
     `> ${recipes.length} focused recipes for running Node.js on Kubernetes. One thing per recipe.`,
     '',
-    `- Canonical: ${SITE.url}/recipes/`,
+    `- Canonical: ${SITE.url}/recipes`,
     `- Full example: ${FULL_EXAMPLE_URL}`,
     '',
     recipeListMarkdown(recipes, true),

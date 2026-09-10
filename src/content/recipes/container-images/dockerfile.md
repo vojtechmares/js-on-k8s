@@ -55,4 +55,4 @@ can overwrite the clean install.
 - Pin the base image by digest in CI for reproducible builds.
 - If you have a TypeScript build step, run it in the build stage and copy `dist/` instead of `src/`.
 - The final image has no shell, so `RUN` does not work there. Do all the work in the build stage.
-- See [distroless images](/recipes/container-images/distroless-image/) for what the runtime stage gives you.
+- See [distroless images](/recipes/container-images/distroless-image) for what the runtime stage gives you.

@@ -1,6 +1,6 @@
 # Application-owned. Attaches the app to a Gateway the platform team runs.
 # Alternative to k8s/base/ingress.yaml; use one or the other.
-# Recipe: https://js-on-k8s.dev/recipes/networking/
+# Recipe: https://js-on-k8s.dev/recipes/networking
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:

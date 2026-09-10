@@ -61,4 +61,4 @@ export const Route = createFileRoute("/api/readyz")({
 
 - `NITRO_SHUTDOWN_SIGNALS` (default `SIGINT SIGTERM`) and `NITRO_SHUTDOWN_DISABLED=true` exist, but you should not need them.
 - Close database pools in a Nitro plugin's `close` hook, or in your own listener before Nitro's timeout fires.
-- Containerizing TanStack Start is its own recipe: [Containerize a TanStack Start app with Nitro](/recipes/container-images/tanstack-start/).
+- Containerizing TanStack Start is its own recipe: [Containerize a TanStack Start app with Nitro](/recipes/container-images/tanstack-start).

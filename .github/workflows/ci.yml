@@ -24,7 +24,7 @@ jobs:
       - name: Smoke test Markdown twins and Worker config
         run: |
           test -f dist/index.md
-          test -f dist/recipes/index.md
+          test -f dist/recipes.md
           test -f dist/recipes/graceful-shutdown.md
           grep -q 'text/markdown' dist/index.html
           pnpm exec wrangler deploy --dry-run --outdir /tmp/wd > /dev/null

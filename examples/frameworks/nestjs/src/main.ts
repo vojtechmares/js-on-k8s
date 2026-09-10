@@ -1,4 +1,4 @@
-// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-nestjs/
+// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-nestjs
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 

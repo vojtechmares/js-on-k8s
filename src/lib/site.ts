@@ -18,12 +18,10 @@ export function exampleUrl(path: string): string {
 }
 
 export function recipeUrl(id: string): string {
-  return `/recipes/${id}/`;
+  return `/recipes/${id}`;
 }
 
 export function markdownPath(pathname: string): string {
   if (pathname === '/') return '/index.md';
-  if (pathname.endsWith('/index/')) return pathname.replace(/\/index\/$/, '/index.md');
-  const trimmed = pathname.replace(/\/$/, '');
-  return `${trimmed}.md`;
+  return `${pathname.replace(/\/$/, '')}.md`;
 }

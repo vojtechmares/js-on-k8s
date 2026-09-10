@@ -1,5 +1,5 @@
 // One JSON object per line on stdout, via pino. Nothing else.
-// Recipe: https://js-on-k8s.dev/recipes/logging/
+// Recipe: https://js-on-k8s.dev/recipes/logging
 
 import pino from "pino";
 

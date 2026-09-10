@@ -9,7 +9,7 @@ example: examples/full/k8s/base
 ---
 
 This is the complete baseline in plain YAML. Every other recipe adjusts one part of it, and
-the [Kustomize](/recipes/manifests/kustomize/) and [Helm](/recipes/manifests/helm-chart/) recipes below
+the [Kustomize](/recipes/manifests/kustomize) and [Helm](/recipes/manifests/helm-chart) recipes below
 package the same files for more than one environment.
 
 ```yaml
@@ -89,6 +89,6 @@ spec:
 - Name the port and reference it by name in probes and the Service. Change the number in one place.
 - `readOnlyRootFilesystem: true` works with Node.js as long as you do not write to disk.
   Mount an `emptyDir` at `/tmp` if a library needs it.
-- Memory limit equals memory request. See [memory and CPU](/recipes/memory-and-cpu/) for why.
-- One full CPU requested, no CPU limit. Less than that throttles Node.js under load; see [memory and CPU](/recipes/memory-and-cpu/).
-- Expose through an Ingress or an HTTPRoute; see [networking](/recipes/networking/). The Service is all the app needs to know about.
+- Memory limit equals memory request. See [memory and CPU](/recipes/memory-and-cpu) for why.
+- One full CPU requested, no CPU limit. Less than that throttles Node.js under load; see [memory and CPU](/recipes/memory-and-cpu).
+- Expose through an Ingress or an HTTPRoute; see [networking](/recipes/networking). The Service is all the app needs to know about.

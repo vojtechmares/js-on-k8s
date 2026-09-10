@@ -1,5 +1,5 @@
 # Cloud Native Buildpacks project descriptor.
-# Recipe: https://js-on-k8s.dev/recipes/container-images/buildpacks/
+# Recipe: https://js-on-k8s.dev/recipes/container-images/buildpacks
 #
 #   pack build ghcr.io/vojtechmares/js-on-k8s-example:1.0.0 \
 #     --builder paketobuildpacks/builder-jammy-base

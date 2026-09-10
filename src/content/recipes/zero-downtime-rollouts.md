@@ -8,8 +8,8 @@ updated: 2026-09-10
 example: examples/full/k8s/base
 ---
 
-With [graceful shutdown](/recipes/graceful-shutdown/) and
-[readiness probes](/recipes/probes/) in place, the last piece is telling the
+With [graceful shutdown](/recipes/graceful-shutdown) and
+[readiness probes](/recipes/probes) in place, the last piece is telling the
 scheduler how many Pods may be unavailable at any time. The answer is zero.
 
 ## Strategy

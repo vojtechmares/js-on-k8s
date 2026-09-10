@@ -5,8 +5,8 @@
  *
  * Every HTML page has a Markdown twin built by Astro:
  *   /              -> /index.md
- *   /recipes/      -> /recipes/index.md
- *   /recipes/foo/  -> /recipes/foo.md
+ *   /recipes       -> /recipes.md
+ *   /recipes/foo   -> /recipes/foo.md
  */
 
 interface Env {

@@ -11,7 +11,7 @@ example: examples/full/k8s/base/deployment.yaml
 There is no correct number to copy. The right requests and limits come from
 looking at what your app does under real traffic, and they change with every
 dependency and runtime upgrade. Start from the defaults below, then let
-[telemetry](/recipes/telemetry/) correct you: CPU usage, throttling, heap size,
+[telemetry](/recipes/telemetry) correct you: CPU usage, throttling, heap size,
 RSS and event loop lag are all one dashboard away once the SDK is in.
 
 ## CPU

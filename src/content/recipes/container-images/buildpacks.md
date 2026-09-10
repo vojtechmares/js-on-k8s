@@ -47,8 +47,8 @@ value = "."
 ## Notes
 
 - The launcher is PID 1 and forwards `SIGTERM` to your process. Your
-  [shutdown handler](/recipes/graceful-shutdown/) still applies.
+  [shutdown handler](/recipes/graceful-shutdown) still applies.
 - Dev dependencies are pruned when `NODE_ENV=production`, which Paketo sets by default.
 - `pack rebase` swaps the run image for a patched one without rebuilding your layers.
 - Trade-off: the run image is Ubuntu based and includes a shell. Smaller than most
-  hand-written images, but not [distroless](/recipes/container-images/distroless-image/).
+  hand-written images, but not [distroless](/recipes/container-images/distroless-image).

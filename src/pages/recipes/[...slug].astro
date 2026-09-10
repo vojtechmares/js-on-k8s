@@ -35,7 +35,7 @@ const updated = recipe.data.updated;
 
 const crumbs = [
   { name: SITE.short, item: `${SITE.url}/` },
-  { name: 'Recipes', item: `${SITE.url}/recipes/` },
+  { name: 'Recipes', item: `${SITE.url}/recipes` },
   ...(parent ? [{ name: parent.data.title, item: `${SITE.url}${recipeUrl(parent.id)}` }] : []),
   { name: recipe.data.title, item: url },
 ];
@@ -69,7 +69,7 @@ const jsonLd = [
 <Base title={recipe.data.title} description={recipe.data.description} jsonLd={jsonLd} ogType="article" updated={updated}>
   <article class="prose">
     <p class="text-xs text-zinc-500">
-      <a href="/recipes/" class="text-zinc-500">recipes</a>
+      <a href="/recipes" class="text-zinc-500">recipes</a>
       {parent && <> / <a href={recipeUrl(parent.id)} class="text-zinc-500">{parent.id}</a></>}
       {' / '}{recipe.id.split('/').pop()}
     </p>

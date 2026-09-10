@@ -82,4 +82,4 @@ CMD ["src/server.ts"]
 
 - `hostname: "0.0.0.0"` in `serve()`. The adapter defaults to all interfaces, but be explicit; Fastify users have been bitten by the opposite default.
 - Health and readiness routes come before any middleware that needs a database.
-- Shutdown handling for Hono is in [graceful shutdown with Hono](/recipes/graceful-shutdown/hono/).
+- Shutdown handling for Hono is in [graceful shutdown with Hono](/recipes/graceful-shutdown/hono).

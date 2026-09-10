@@ -88,7 +88,7 @@ process.on("SIGTERM", () => sdk.shutdown());
 
 ## The three signals
 
-- **Logs.** Keep [writing JSON to stdout](/recipes/logging/). The pino instrumentation adds `trace_id` and `span_id` to every line, so logs and traces join up. Ship them either from stdout with the collector's `filelog` receiver, or directly over OTLP with the logs exporter. Not both.
+- **Logs.** Keep [writing JSON to stdout](/recipes/logging). The pino instrumentation adds `trace_id` and `span_id` to every line, so logs and traces join up. Ship them either from stdout with the collector's `filelog` receiver, or directly over OTLP with the logs exporter. Not both.
 - **Metrics.** Auto-instrumentation gives you HTTP duration histograms and runtime metrics. Push over OTLP, or expose `/metrics` with `@opentelemetry/exporter-prometheus` if your cluster scrapes.
 - **Traces.** Incoming requests, outgoing HTTP, database calls, message queues. Sample in the collector, not in the app, so you can change it without a rollout.
 

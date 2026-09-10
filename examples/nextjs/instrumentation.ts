@@ -1,4 +1,4 @@
-// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown/nextjs/
+// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown/nextjs
 // Runs once at server start. Next.js keeps its own SIGTERM handler, which
 // finishes in-flight requests and exits; these listeners run alongside it.
 export async function register() {

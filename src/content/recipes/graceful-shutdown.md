@@ -63,7 +63,7 @@ which requires a shell in the image.
 ## Notes
 
 - Order of timeouts: `preStop` + app deadline < `terminationGracePeriodSeconds`.
-- Also fail the readiness probe as soon as shutdown starts. See [health checks](/recipes/probes/).
+- Also fail the readiness probe as soon as shutdown starts. See [health checks](/recipes/probes).
 - Close database pools and flush logs after `server.close()` resolves, before `process.exit()`.
 - Since Node.js 19, `server.close()` closes idle keep-alive connections itself. The explicit call keeps older versions working.
 - Using a framework or a meta-framework? The recipes below cover Express, Fastify, Hono, Elysia, NestJS, Next.js and TanStack Start.

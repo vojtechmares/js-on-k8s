@@ -1,4 +1,4 @@
-// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-hono/
+// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-hono
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 

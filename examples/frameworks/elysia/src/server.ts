@@ -1,4 +1,4 @@
-// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-elysia/
+// Recipe: https://js-on-k8s.dev/recipes/graceful-shutdown-elysia
 import { Elysia } from "elysia";
 
 let ready = false;
