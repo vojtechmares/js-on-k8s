@@ -6,6 +6,8 @@
 GET {{base}}/
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 HTTP 200
+[Captures]
+css: xpath "string(//link[@rel='stylesheet'][1]/@href)"
 [Asserts]
 header "Content-Type" == "text/html; charset=utf-8"
 header "Vary" contains "Accept"
@@ -101,11 +103,7 @@ Accept: text/markdown
 HTTP 404
 
 # --- Static assets served without the Worker ----------------------------------
-GET {{base}}/
-HTTP 200
-[Captures]
-css: xpath "string(//link[@rel='stylesheet'][1]/@href)"
-
+# {{css}} is captured from the home page above.
 GET {{base}}{{css}}
 HTTP 200
 [Asserts]
