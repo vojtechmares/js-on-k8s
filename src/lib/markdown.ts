@@ -3,6 +3,25 @@ import { SITE, FULL_EXAMPLE_URL, exampleUrl, recipeUrl } from './site';
 
 export type Recipe = CollectionEntry<'recipes'>;
 
+export const SECTIONS = [
+  { id: 'build', title: 'Build', blurb: 'From source to an image that is safe to ship.' },
+  { id: 'run', title: 'Run', blurb: 'From an image to Pods that start, stop and route traffic correctly.' },
+  { id: 'measure', title: 'Measure and right-size', blurb: 'See what the app does, then set the numbers.' },
+  { id: 'misc', title: 'Misc', blurb: 'Everything else.' },
+] as const;
+
+export type SectionId = (typeof SECTIONS)[number]['id'];
+
+export function sectionOf(recipe: Recipe, byId: Map<string, Recipe>): SectionId {
+  const p = parentId(recipe);
+  const top = p === null ? recipe : byId.get(p);
+  return top?.data.section ?? 'misc';
+}
+
+function sectionIndex(id: SectionId): number {
+  return SECTIONS.findIndex((s) => s.id === id);
+}
+
 export const MARKDOWN_HEADERS = {
   'Content-Type': 'text/markdown; charset=utf-8',
   Vary: 'Accept',
@@ -21,17 +40,18 @@ export function isChild(recipe: Recipe): boolean {
 export async function sortedRecipes(): Promise<Recipe[]> {
   const all = await getCollection('recipes');
   const byId = new Map(all.map((r) => [r.id, r]));
-  const key = (r: Recipe): [number, number] => {
+  const key = (r: Recipe): [number, number, number] => {
+    const s = sectionIndex(sectionOf(r, byId));
     const p = parentId(r);
-    if (p === null) return [r.data.order, 0];
+    if (p === null) return [s, r.data.order, 0];
     const parent = byId.get(p);
     if (!parent) throw new Error(`Recipe ${r.id} has no parent ${p}`);
-    return [parent.data.order, r.data.order];
+    return [s, parent.data.order, r.data.order];
   };
   return all.sort((a, b) => {
-    const [a0, a1] = key(a);
-    const [b0, b1] = key(b);
-    return a0 - b0 || a1 - b1;
+    const [a0, a1, a2] = key(a);
+    const [b0, b1, b2] = key(b);
+    return a0 - b0 || a1 - b1 || a2 - b2;
   });
 }
 
@@ -39,10 +59,21 @@ export function childrenOf(recipe: Recipe, all: Recipe[]): Recipe[] {
   return all.filter((r) => parentId(r) === recipe.id);
 }
 
-export function recipeListMarkdown(recipes: Recipe[]): string {
-  return recipes
-    .map((r) => `${isChild(r) ? '  ' : ''}- [${r.data.title}](${SITE.url}${recipeUrl(r.id)}) - ${r.data.description}`)
-    .join('\n');
+/** Flat list with a heading whenever the section changes (only when `sections` is true). */
+export function recipeListMarkdown(recipes: Recipe[], sections = false): string {
+  const byId = new Map(recipes.map((r) => [r.id, r]));
+  const lines: string[] = [];
+  let current: SectionId | null = null;
+  for (const r of recipes) {
+    const s = sectionOf(r, byId);
+    if (sections && s !== current) {
+      const meta = SECTIONS.find((x) => x.id === s)!;
+      lines.push(current === null ? `### ${meta.title}` : `\n### ${meta.title}`, '');
+      current = s;
+    }
+    lines.push(`${isChild(r) ? '  ' : ''}- [${r.data.title}](${SITE.url}${recipeUrl(r.id)}) - ${r.data.description}`);
+  }
+  return lines.join('\n');
 }
 
 export function recipeMarkdown(recipe: Recipe, all: Recipe[]): string {
@@ -84,7 +115,7 @@ export async function homeMarkdown(page: CollectionEntry<'pages'>): Promise<stri
     '',
     '## Recipes',
     '',
-    recipeListMarkdown(recipes),
+    recipeListMarkdown(recipes, true),
     '',
     `Each recipe is also available as Markdown: append \`.md\` to its URL, or request it with \`Accept: text/markdown\`.`,
     '',
@@ -101,7 +132,7 @@ export async function recipesIndexMarkdown(): Promise<string> {
     `- Canonical: ${SITE.url}/recipes/`,
     `- Full example: ${FULL_EXAMPLE_URL}`,
     '',
-    recipeListMarkdown(recipes),
+    recipeListMarkdown(recipes, true),
     '',
   ].join('\n');
 }

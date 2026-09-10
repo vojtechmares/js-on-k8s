@@ -1,7 +1,8 @@
 ---
 title: Container images for Node.js
 description: What a production image should contain, and the recipes that get you there for plain Node.js, Bun, Next.js and TanStack Start.
-order: 4
+order: 2
+section: build
 tags: [dockerfile, docker, images, distroless, buildpacks]
 updated: 2026-09-10
 example: examples/full/Dockerfile

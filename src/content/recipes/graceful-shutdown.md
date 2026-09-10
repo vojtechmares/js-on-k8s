@@ -1,7 +1,8 @@
 ---
 title: Graceful shutdown on SIGTERM
 description: Stop accepting connections, finish in-flight requests, then exit with a deadline.
-order: 2
+order: 6
+section: run
 tags: [signals, shutdown, http]
 updated: 2026-09-10
 example: examples/full/src/server.js

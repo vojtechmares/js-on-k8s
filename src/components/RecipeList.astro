@@ -1,34 +1,56 @@
 ---
 import { recipeUrl } from '../lib/site';
-import { isChild, type Recipe } from '../lib/markdown';
+import { isChild, sectionOf, SECTIONS, type Recipe } from '../lib/markdown';
 
 interface Props {
   recipes: Recipe[];
+  /** Insert a heading whenever the section changes. Off for child lists. */
+  sections?: boolean;
 }
-const { recipes } = Astro.props;
+const { recipes, sections = false } = Astro.props;
+
+const byId = new Map(recipes.map((r) => [r.id, r]));
 
 // Number top-level recipes; children hang below their parent with an ASCII branch.
+type Row =
+  | { kind: 'section'; title: string; blurb: string }
+  | { kind: 'recipe'; r: Recipe; child: boolean; label: string };
+const rows: Row[] = [];
 let n = 0;
-const rows = recipes.map((r, i) => {
+let current: string | null = null;
+recipes.forEach((r, i) => {
+  const s = sectionOf(r, byId);
+  if (sections && s !== current) {
+    const meta = SECTIONS.find((x) => x.id === s)!;
+    rows.push({ kind: 'section', title: meta.title, blurb: meta.blurb });
+    current = s;
+  }
   const child = isChild(r);
   if (!child) n++;
   const last = child && (i === recipes.length - 1 || !isChild(recipes[i + 1]));
-  return { r, child, label: child ? (last ? '└─' : '├─') : String(n).padStart(2, '0') };
+  rows.push({ kind: 'recipe', r, child, label: child ? (last ? '└─' : '├─') : String(n).padStart(2, '0') });
 });
 ---
 
 <ol class="space-y-2 text-[0.9375rem] leading-7">
   {
-    rows.map(({ r, child, label }) => (
-      <li class:list={['flex gap-3', child && 'pl-9']}>
-        <span class="w-6 shrink-0 text-right text-zinc-400" aria-hidden="true">{label}</span>
-        <span>
-          <a href={recipeUrl(r.id)} class="text-blue-700 underline underline-offset-4 hover:bg-blue-100">
-            {r.data.title}
-          </a>
-          <span class="text-zinc-600"> - {r.data.description}</span>
-        </span>
-      </li>
-    ))
+    rows.map((row) =>
+      row.kind === 'section' ? (
+        <li class="rule-single list-none pt-4 first:pt-0" aria-hidden="false">
+          <span class="font-bold">{row.title}</span>
+          <span class="text-zinc-500"> - {row.blurb}</span>
+        </li>
+      ) : (
+        <li class:list={['flex gap-3', row.child && 'pl-9']}>
+          <span class="w-6 shrink-0 text-right text-zinc-400" aria-hidden="true">{row.label}</span>
+          <span>
+            <a href={recipeUrl(row.r.id)} class="text-blue-700 underline underline-offset-4 hover:bg-blue-100">
+              {row.r.data.title}
+            </a>
+            <span class="text-zinc-600"> - {row.r.data.description}</span>
+          </span>
+        </li>
+      ),
+    )
   }
 </ol>

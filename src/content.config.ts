@@ -19,6 +19,8 @@ const recipes = defineCollection({
     updated: z.coerce.date(),
     // Path inside examples/ that shows this recipe applied, relative to repo root.
     example: z.string().optional(),
+    // Top-level recipes only. Groups the list: build > run > measure > misc.
+    section: z.enum(['build', 'run', 'measure', 'misc']).optional(),
   }),
 });
 

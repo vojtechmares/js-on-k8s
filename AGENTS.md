@@ -17,6 +17,7 @@ Source of https://www.js-on-k8s.dev - a single-page docs site plus recipes about
 - Every HTML route needs a `.md` twin (`src/pages/**/*.md.ts`) so `Accept: text/markdown` works.
 - Recipe frontmatter: `title`, `description`, `order`, `tags`, `updated`, optional `example` (path in repo).
 - Nested recipes live in `src/content/recipes/<parent>/<child>.md`; `order` sorts within the parent.
+- Top-level recipes carry `section` (build, run, measure, misc). Lists are grouped by section, then `order`. Keep the story build > run > measure.
 
 ## Commands
 

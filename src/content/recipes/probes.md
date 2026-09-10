@@ -1,7 +1,8 @@
 ---
 title: Kubernetes probes done right
 description: Liveness restarts, readiness routes. Give them different endpoints, keep dependencies out, and use readiness to shed load.
-order: 3
+order: 5
+section: run
 tags: [probes, liveness, readiness, startup, kubernetes]
 updated: 2026-09-10
 example: examples/full/src/server.js

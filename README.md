@@ -40,6 +40,7 @@ order: 14
 tags: [kubernetes]
 updated: 2026-09-10
 example: examples/full/path/to/file   # optional, linked from the page
+section: run                          # top-level only: build | run | measure | misc
 ---
 ```
 

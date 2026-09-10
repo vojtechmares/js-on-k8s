@@ -1,7 +1,8 @@
 ---
 title: Kubernetes manifests for a Node.js app
 description: "The plain YAML baseline: a Deployment and a Service with probes, resources, security context and a named port. Kustomize and Helm build on it."
-order: 5
+order: 3
+section: run
 tags: [kubernetes, deployment, service, manifests]
 updated: 2026-09-10
 example: examples/full/k8s/base

@@ -2,6 +2,7 @@
 title: Run node directly, not npm start
 description: Make node PID 1 so Kubernetes signals reach your application code.
 order: 1
+section: build
 tags: [dockerfile, signals, pid1]
 updated: 2026-09-10
 example: examples/full/Dockerfile
