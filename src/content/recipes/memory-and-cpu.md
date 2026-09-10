@@ -1,7 +1,7 @@
 ---
 title: Memory and CPU for Node.js Pods
 description: Measure before you set numbers. Then give Node.js a full CPU or two, size the heap under the memory limit, and re-measure after every runtime upgrade.
-order: 12
+order: 7
 tags: [resources, memory, cpu, v8, oomkilled]
 updated: 2026-09-10
 example: examples/full/k8s/base/deployment.yaml

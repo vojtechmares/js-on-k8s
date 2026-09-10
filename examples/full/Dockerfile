@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Recipes:
-#   https://www.js-on-k8s.dev/recipes/dockerfile/
-#   https://www.js-on-k8s.dev/recipes/distroless-image/
+#   https://www.js-on-k8s.dev/recipes/container-images/dockerfile/
+#   https://www.js-on-k8s.dev/recipes/container-images/distroless-image/
 #   https://www.js-on-k8s.dev/recipes/run-node-directly/
 
 # --- build stage: install production dependencies ---------------------------

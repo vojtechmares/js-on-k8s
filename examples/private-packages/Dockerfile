@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Recipe: https://www.js-on-k8s.dev/recipes/build-secrets/
+# Recipe: https://www.js-on-k8s.dev/recipes/container-images/build-secrets/
 #
 #   export NPM_TOKEN=...
 #   docker build --secret id=NPM_TOKEN .

@@ -7,9 +7,9 @@ A small Node.js HTTP service with every recipe from [js-on-k8s.dev](https://www.
 | [Run node directly](https://www.js-on-k8s.dev/recipes/run-node-directly/) | `Dockerfile` (`CMD ["src/server.js"]`), `Procfile` |
 | [Graceful shutdown](https://www.js-on-k8s.dev/recipes/graceful-shutdown/) | `src/server.js`, `preStop` in `k8s/base/deployment.yaml` |
 
-| [Dockerfile](https://www.js-on-k8s.dev/recipes/dockerfile/) | `Dockerfile`, `.dockerignore` |
-| [Distroless](https://www.js-on-k8s.dev/recipes/distroless-image/) | runtime stage in `Dockerfile` |
-| [Buildpacks](https://www.js-on-k8s.dev/recipes/buildpacks/) | `project.toml`, `Procfile` |
+| [Dockerfile](https://www.js-on-k8s.dev/recipes/container-images/dockerfile/) | `Dockerfile`, `.dockerignore` |
+| [Distroless](https://www.js-on-k8s.dev/recipes/container-images/distroless-image/) | runtime stage in `Dockerfile` |
+| [Buildpacks](https://www.js-on-k8s.dev/recipes/container-images/buildpacks/) | `project.toml`, `Procfile` |
 | [Deployment](https://www.js-on-k8s.dev/recipes/manifests/) | `k8s/base/` |
 | [Memory and CPU](https://www.js-on-k8s.dev/recipes/memory-and-cpu/) | `resources` and `NODE_OPTIONS` in `k8s/base/deployment.yaml` |
 | [Config from environment](https://www.js-on-k8s.dev/recipes/config-from-environment/) | `src/config.js`, `configMapGenerator` in `k8s/base/kustomization.yaml` |

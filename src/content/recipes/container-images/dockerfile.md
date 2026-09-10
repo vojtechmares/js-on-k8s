@@ -1,7 +1,7 @@
 ---
 title: A minimal multi-stage Dockerfile
 description: Install with npm ci, build in one stage, copy only what runs into the final image.
-order: 4
+order: 1
 tags: [dockerfile, docker, build]
 updated: 2026-09-10
 example: examples/full/Dockerfile
@@ -55,4 +55,4 @@ can overwrite the clean install.
 - Pin the base image by digest in CI for reproducible builds.
 - If you have a TypeScript build step, run it in the build stage and copy `dist/` instead of `src/`.
 - The final image has no shell, so `RUN` does not work there. Do all the work in the build stage.
-- See [distroless images](/recipes/distroless-image/) for what the runtime stage gives you.
+- See [distroless images](/recipes/container-images/distroless-image/) for what the runtime stage gives you.

@@ -1,7 +1,7 @@
 ---
 title: Build an image with Cloud Native Buildpacks
 description: Get a production Node.js image without writing a Dockerfile, using pack and Paketo.
-order: 7
+order: 4
 tags: [buildpacks, paketo, build]
 updated: 2026-09-10
 example: examples/full/project.toml
@@ -51,4 +51,4 @@ value = "."
 - Dev dependencies are pruned when `NODE_ENV=production`, which Paketo sets by default.
 - `pack rebase` swaps the run image for a patched one without rebuilding your layers.
 - Trade-off: the run image is Ubuntu based and includes a shell. Smaller than most
-  hand-written images, but not [distroless](/recipes/distroless-image/).
+  hand-written images, but not [distroless](/recipes/container-images/distroless-image/).

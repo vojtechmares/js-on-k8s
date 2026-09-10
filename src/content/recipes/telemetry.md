@@ -1,7 +1,7 @@
 ---
 title: Telemetry with OpenTelemetry
 description: Kubernetes collects nothing about your app. Export logs, metrics and traces yourself, in one standard.
-order: 15
+order: 10
 tags: [opentelemetry, otel, metrics, traces, logs, observability]
 updated: 2026-09-10
 example: examples/telemetry

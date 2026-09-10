@@ -1,7 +1,7 @@
 ---
 title: Pod, Service, Ingress, Gateway API and NetworkPolicy
 description: How a request reaches your container, and why you should say who may talk to it.
-order: 11
+order: 6
 tags: [service, ingress, networkpolicy, networking, kubernetes]
 updated: 2026-09-10
 example: examples/full/k8s/base
