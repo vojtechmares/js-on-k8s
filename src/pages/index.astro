@@ -1,0 +1,52 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import RecipeList from '../components/RecipeList.astro';
+import { SITE, FULL_EXAMPLE_URL } from '../lib/site';
+import { sortedRecipes } from '../lib/markdown';
+
+const page = await getEntry('pages', 'index');
+if (!page) throw new Error('Missing src/content/pages/index.md');
+const { Content } = await render(page);
+const recipes = await sortedRecipes();
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    alternateName: SITE.short,
+    url: `${SITE.url}/`,
+    description: SITE.description,
+    inLanguage: 'en',
+    author: { '@type': 'Person', name: SITE.author.name, url: SITE.author.url },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Recipes',
+    itemListElement: recipes.map((r, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: r.data.title,
+      url: `${SITE.url}/recipes/${r.id}/`,
+    })),
+  },
+];
+---
+
+<Base title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
+  <article class="prose">
+    <h1>{page.data.title}</h1>
+    <Content />
+  </article>
+
+  <section class="prose mt-10" aria-labelledby="recipes">
+    <h2 id="recipes">Recipes</h2>
+    <RecipeList recipes={recipes} />
+    <p>
+      Every recipe is applied together in the{' '}
+      <a href={FULL_EXAMPLE_URL} rel="noopener">full example</a> in the repository.
+    </p>
+  </section>
+</Base>

@@ -1,0 +1,15 @@
+# Cloud Native Buildpacks project descriptor.
+# Recipe: https://www.js-on-k8s.dev/recipes/buildpacks/
+#
+#   pack build ghcr.io/vojtechmares/js-on-k8s-example:1.0.0 \
+#     --builder paketobuildpacks/builder-jammy-base
+[_]
+schema-version = "0.2"
+
+[[io.buildpacks.build.env]]
+name = "BP_NODE_VERSION"
+value = "24.*"
+
+[[io.buildpacks.build.env]]
+name = "BP_NODE_PROJECT_PATH"
+value = "."

@@ -1,0 +1,58 @@
+# Full example
+
+A small Node.js HTTP service with every recipe from [js-on-k8s.dev](https://www.js-on-k8s.dev) applied.
+
+| Recipe | Where |
+| --- | --- |
+| [Run node directly](https://www.js-on-k8s.dev/recipes/run-node-directly/) | `Dockerfile` (`CMD ["src/server.js"]`), `Procfile` |
+| [Graceful shutdown](https://www.js-on-k8s.dev/recipes/graceful-shutdown/) | `src/server.js`, `preStop` in `k8s/base/deployment.yaml` |
+| [Health checks](https://www.js-on-k8s.dev/recipes/health-checks/) | `/healthz` and `/readyz` in `src/server.js`, probes in the manifests |
+| [Dockerfile](https://www.js-on-k8s.dev/recipes/dockerfile/) | `Dockerfile`, `.dockerignore` |
+| [Distroless](https://www.js-on-k8s.dev/recipes/distroless-image/) | runtime stage in `Dockerfile` |
+| [Buildpacks](https://www.js-on-k8s.dev/recipes/buildpacks/) | `project.toml`, `Procfile` |
+| [Deployment](https://www.js-on-k8s.dev/recipes/deployment/) | `k8s/base/` |
+| [Memory and CPU](https://www.js-on-k8s.dev/recipes/memory-and-cpu/) | `resources` and `NODE_OPTIONS` in `k8s/base/deployment.yaml` |
+| [Config from environment](https://www.js-on-k8s.dev/recipes/config-from-environment/) | `src/config.js`, `configMapGenerator` in `k8s/base/kustomization.yaml` |
+| [Logging](https://www.js-on-k8s.dev/recipes/logging/) | `src/log.js` |
+| [Zero-downtime rollouts](https://www.js-on-k8s.dev/recipes/zero-downtime-rollouts/) | `strategy`, `topologySpreadConstraints`, `k8s/base/pdb.yaml` |
+| [Kustomize](https://www.js-on-k8s.dev/recipes/kustomize/) | `k8s/base/`, `k8s/overlays/` |
+| [Helm chart](https://www.js-on-k8s.dev/recipes/helm-chart/) | `chart/` |
+
+## Run locally
+
+```sh
+npm ci
+node src/server.js
+curl localhost:3000/
+curl localhost:3000/readyz
+```
+
+Send `SIGTERM` (Ctrl+C sends `SIGINT`, which is handled the same way) while a request to `/slow` is in flight and watch it finish before the process exits.
+
+## Build the image
+
+```sh
+docker build -t ghcr.io/vojtechmares/js-on-k8s-example:1.0.0 .
+docker run --rm -p 3000:3000 ghcr.io/vojtechmares/js-on-k8s-example:1.0.0
+```
+
+Or with buildpacks:
+
+```sh
+pack build ghcr.io/vojtechmares/js-on-k8s-example:1.0.0 --builder paketobuildpacks/builder-jammy-base
+```
+
+## Deploy
+
+Kustomize:
+
+```sh
+kubectl apply -k k8s/overlays/staging
+kubectl rollout status deployment/app -n app-staging
+```
+
+Helm:
+
+```sh
+helm upgrade --install app ./chart -n app --create-namespace
+```

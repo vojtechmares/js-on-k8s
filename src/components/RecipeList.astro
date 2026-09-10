@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { recipeUrl } from '../lib/site';
+
+interface Props {
+  recipes: CollectionEntry<'recipes'>[];
+}
+const { recipes } = Astro.props;
+---
+
+<ol class="space-y-3 text-[0.9375rem] leading-7">
+  {
+    recipes.map((r, i) => (
+      <li class="flex gap-3">
+        <span class="w-6 shrink-0 text-right text-zinc-400" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <span>
+          <a href={recipeUrl(r.id)} class="text-blue-700 underline underline-offset-4 hover:bg-blue-100">
+            {r.data.title}
+          </a>
+          <span class="text-zinc-600"> - {r.data.description}</span>
+        </span>
+      </li>
+    ))
+  }
+</ol>

@@ -1,0 +1,35 @@
+{
+  "name": "js-on-k8s",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && wrangler dev",
+    "check": "tsc -p worker/tsconfig.json",
+    "deploy": "astro build && wrangler deploy",
+    "og": "node scripts/og.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.7",
+    "tailwindcss": "^4.3.3"
+  },
+  "allowScripts": {
+    "esbuild": true
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260826.1",
+    "sharp": "^0.35.4",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.126.0"
+  },
+  "description": "Source of www.js-on-k8s.dev - recipes for running Node.js on Kubernetes",
+  "license": "MIT"
+}

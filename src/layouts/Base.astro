@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import { SITE, markdownPath } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** JSON-LD objects to embed. */
+  jsonLd?: Record<string, unknown>[];
+  ogType?: 'website' | 'article';
+  updated?: Date;
+}
+
+const { title, description, jsonLd = [], ogType = 'website', updated } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).toString();
+const mdHref = markdownPath(Astro.url.pathname);
+const fullTitle = Astro.url.pathname === '/' ? `${SITE.name} (${SITE.short})` : `${title} - ${SITE.short}`;
+const ogImage = new URL('/og.png', SITE.url).toString();
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="text/markdown" href={mdHref} title="Markdown version" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content={SITE.author.name} />
+    <meta name="theme-color" content="#fcfcfc" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    {updated && <meta property="article:modified_time" content={updated.toISOString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  </head>
+  <body class="min-h-screen">
+    <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+      <header class="mb-10">
+        <a href="/" class="block no-underline text-zinc-900 hover:text-blue-700" aria-label={`${SITE.name} home`}>
+          <pre class="overflow-x-auto text-[9px] leading-[1.15] sm:text-[13px]" aria-hidden="true">{`   _                             _    ___
+  (_)___        ___  _ __       | | _( _ ) ___
+  | / __|_____ / _ \\| '_ \\ _____| |/ / _ \\/ __|
+  | \\__ \\_____| (_) | | | |_____|   < (_) \\__ \\
+ _/ |___/      \\___/|_| |_|     |_|\\_\\___/|___/
+|__/`}</pre>
+        </a>
+        <nav class="rule-double mt-4 text-sm" aria-label="Main">
+          <span class="text-zinc-400">[</span> <a href="/" class="underline underline-offset-4 hover:bg-blue-100">home</a> <span class="text-zinc-400">]</span>
+          <span class="text-zinc-400">[</span> <a href="/recipes/" class="underline underline-offset-4 hover:bg-blue-100">recipes</a> <span class="text-zinc-400">]</span>
+          <span class="text-zinc-400">[</span> <a href={SITE.repo} class="underline underline-offset-4 hover:bg-blue-100" rel="noopener">github</a> <span class="text-zinc-400">]</span>
+          <span class="text-zinc-400">[</span> <a href={mdHref} class="underline underline-offset-4 hover:bg-blue-100" title="This page as Markdown">.md</a> <span class="text-zinc-400">]</span>
+        </nav>
+      </header>
+
+      <main id="main">
+        <slot />
+      </main>
+
+      <footer class="mt-16 text-xs leading-6 text-zinc-500">
+        <p class="rule-single" aria-hidden="true"></p>
+        <p>
+          {SITE.short} &middot; &copy; {year} <a href={SITE.author.url} class="underline underline-offset-4" rel="author noopener">{SITE.author.name}</a>
+          &middot; <a href={SITE.repo} class="underline underline-offset-4" rel="noopener">source on GitHub</a>
+          &middot; <a href={mdHref} class="underline underline-offset-4">markdown</a>
+          &middot; <a href="/llms.txt" class="underline underline-offset-4">llms.txt</a>
+        </p>
+        <p>Agents: send <code>Accept: text/markdown</code> to any page URL to get its Markdown source.</p>
+      </footer>
+    </div>
+  </body>
+</html>

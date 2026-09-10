@@ -1,0 +1,79 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SITE, FULL_EXAMPLE_URL, exampleUrl, recipeUrl } from '../../lib/site';
+import { sortedRecipes } from '../../lib/markdown';
+
+export async function getStaticPaths() {
+  const recipes = await sortedRecipes();
+  return recipes.map((recipe, i) => ({
+    params: { slug: recipe.id },
+    props: { recipe, prev: recipes[i - 1] ?? null, next: recipes[i + 1] ?? null },
+  }));
+}
+
+const { recipe, prev, next } = Astro.props;
+const { Content } = await render(recipe);
+const url = `${SITE.url}${recipeUrl(recipe.id)}`;
+const updated = recipe.data.updated;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: recipe.data.title,
+    description: recipe.data.description,
+    url,
+    mainEntityOfPage: url,
+    dateModified: updated.toISOString(),
+    inLanguage: 'en',
+    keywords: recipe.data.tags.join(', '),
+    author: { '@type': 'Person', name: SITE.author.name, url: SITE.author.url },
+    publisher: { '@type': 'Person', name: SITE.author.name, url: SITE.author.url },
+    isPartOf: { '@type': 'WebSite', name: SITE.name, url: `${SITE.url}/` },
+    encoding: { '@type': 'MediaObject', encodingFormat: 'text/markdown', contentUrl: `${url.replace(/\/$/, '')}.md` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: SITE.short, item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Recipes', item: `${SITE.url}/recipes/` },
+      { '@type': 'ListItem', position: 3, name: recipe.data.title, item: url },
+    ],
+  },
+];
+---
+
+<Base title={recipe.data.title} description={recipe.data.description} jsonLd={jsonLd} ogType="article" updated={updated}>
+  <article class="prose">
+    <p class="text-xs text-zinc-500">
+      <a href="/recipes/" class="text-zinc-500">recipes</a> / {recipe.id}
+    </p>
+    <h1>{recipe.data.title}</h1>
+    <p class="text-zinc-600">{recipe.data.description}</p>
+    <Content />
+
+    <h2>See it applied</h2>
+    <ul>
+      {recipe.data.example && (
+        <li>
+          <a href={exampleUrl(recipe.data.example)} rel="noopener">{recipe.data.example}</a> in the repository
+        </li>
+      )}
+      <li>
+        <a href={FULL_EXAMPLE_URL} rel="noopener">examples/full</a> - every recipe applied to one app
+      </li>
+    </ul>
+    <p class="text-xs text-zinc-500">
+      Updated {updated.toISOString().slice(0, 10)}
+      {recipe.data.tags.length > 0 && <> &middot; tags: {recipe.data.tags.join(', ')}</>}
+      &middot; <a href={`${SITE.repo}/blob/main/src/content/recipes/${recipe.id}.md`} class="text-zinc-500" rel="noopener">edit on GitHub</a>
+    </p>
+  </article>
+
+  <nav class="prose mt-10 flex flex-wrap justify-between gap-4 text-sm" aria-label="Recipe navigation">
+    <span>{prev && <a href={recipeUrl(prev.id)} rel="prev">&lt;- {prev.data.title}</a>}</span>
+    <span>{next && <a href={recipeUrl(next.id)} rel="next">{next.data.title} -&gt;</a>}</span>
+  </nav>
+</Base>

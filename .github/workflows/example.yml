@@ -1,0 +1,40 @@
+name: example
+
+on:
+  push:
+    branches: [main]
+    paths: ['examples/**']
+  pull_request:
+    paths: ['examples/**']
+
+jobs:
+  full:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/full
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci
+      - name: Smoke test graceful shutdown
+        run: |
+          PORT=3000 node src/server.js & echo $! > app.pid
+          sleep 1
+          curl -sf localhost:3000/readyz
+          curl -s -m 10 localhost:3000/slow > slow.out &
+          sleep 0.5
+          kill -TERM "$(cat app.pid)"
+          wait "$(cat app.pid)" || true
+          test "$(cat slow.out)" = done
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: examples/full
+          push: false
+          tags: js-on-k8s-example:ci
+      - uses: azure/setup-helm@v4
+      - run: helm lint ./chart
+      - run: kubectl kustomize k8s/overlays/production > /dev/null
