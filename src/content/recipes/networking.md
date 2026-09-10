@@ -1,5 +1,5 @@
 ---
-title: Pod, Service, Ingress and NetworkPolicy
+title: Pod, Service, Ingress, Gateway API and NetworkPolicy
 description: How a request reaches your container, and why you should say who may talk to it.
 order: 11
 tags: [service, ingress, networkpolicy, networking, kubernetes]
@@ -8,9 +8,9 @@ example: examples/full/k8s/base
 ---
 
 ```
-internet -> Ingress controller -> Service (ClusterIP) -> Pod (Deployment) -> container:3000
-                 |                      |
-           Ingress rules        selector + named port
+internet -> Ingress controller | Gateway -> Service (ClusterIP) -> Pod (Deployment) -> container:3000
+                 |                             |
+        Ingress / HTTPRoute rules      selector + named port
 ```
 
 Pods get an IP each and die with it. A Service gives the group a stable name and
@@ -67,8 +67,66 @@ The Ingress resource is only data. An Ingress controller (ingress-nginx, Traefik
 HAProxy, a cloud load balancer) reads it and does the work. TLS ends at the
 controller; the app speaks plain HTTP and trusts `X-Forwarded-*` from it.
 
-Gateway API (`HTTPRoute`) is the successor to Ingress. Same picture, more
-expressive rules. New clusters should start there.
+## Gateway API
+
+Gateway API is the successor to Ingress and splits the job in two objects with
+two owners.
+
+- The **Gateway** is infrastructure: which load balancer, which listeners, which
+  TLS certificates. The platform team creates it once per cluster or per
+  environment, in its own namespace, and decides which namespaces may attach.
+- The **HTTPRoute** is application config: which hostname and path go to which
+  Service. It lives next to your Deployment, and you own it.
+
+```yaml
+# Owned by the application team, in the app namespace.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: app
+spec:
+  parentRefs:
+    - name: public          # the shared Gateway
+      namespace: gateway-system
+  hostnames: [app.example.com]
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: app
+          port: 80
+```
+
+```yaml
+# Owned by the platform team. Shown for reference; do not ship this with the app.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: public
+  namespace: gateway-system
+spec:
+  gatewayClassName: cilium          # or istio, envoy-gateway, nginx, a cloud class
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.example.com"
+      tls:
+        certificateRefs: [{ name: wildcard-example-com }]
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: "true"
+```
+
+An HTTPRoute can also split traffic by weight between two Services, match on
+headers, and rewrite paths, all without controller-specific annotations. New
+clusters should start with Gateway API; Ingress keeps working but gets no new
+features.
 
 ## NetworkPolicy
 
@@ -128,3 +186,4 @@ and any external API you need.
 - Kubelet probes come from the node, not from a Pod, and are not blocked by policies on most CNIs.
 - Start with a namespace-wide default deny, then allow per app. Adding policies later to a running namespace is harder than starting with them.
 - Same-namespace ingress from the ingress controller depends on how it is deployed. Match its namespace and Pod labels, not an IP.
+- With Gateway API the traffic comes from the Gateway's data plane Pods. Allow ingress from that namespace instead of `ingress-nginx`.

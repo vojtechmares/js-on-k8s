@@ -1,0 +1,17 @@
+# Overlay that swaps the Ingress for an HTTPRoute:
+#   kubectl apply -k k8s/gateway-api
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../base
+  - httproute.yaml
+patches:
+  - target:
+      kind: Ingress
+      name: app
+    patch: |
+      $patch: delete
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: app

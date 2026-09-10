@@ -10,15 +10,15 @@ A small Node.js HTTP service with every recipe from [js-on-k8s.dev](https://www.
 | [Dockerfile](https://www.js-on-k8s.dev/recipes/dockerfile/) | `Dockerfile`, `.dockerignore` |
 | [Distroless](https://www.js-on-k8s.dev/recipes/distroless-image/) | runtime stage in `Dockerfile` |
 | [Buildpacks](https://www.js-on-k8s.dev/recipes/buildpacks/) | `project.toml`, `Procfile` |
-| [Deployment](https://www.js-on-k8s.dev/recipes/deployment/) | `k8s/base/` |
+| [Deployment](https://www.js-on-k8s.dev/recipes/manifests/) | `k8s/base/` |
 | [Memory and CPU](https://www.js-on-k8s.dev/recipes/memory-and-cpu/) | `resources` and `NODE_OPTIONS` in `k8s/base/deployment.yaml` |
 | [Config from environment](https://www.js-on-k8s.dev/recipes/config-from-environment/) | `src/config.js`, `configMapGenerator` in `k8s/base/kustomization.yaml` |
 | [Logging](https://www.js-on-k8s.dev/recipes/logging/) | `src/log.js` |
 | [Probes](https://www.js-on-k8s.dev/recipes/probes/) | `/healthz`, `/readyz` and load shedding in `src/server.js` |
-| [Networking](https://www.js-on-k8s.dev/recipes/networking/) | `k8s/base/service.yaml`, `ingress.yaml`, `networkpolicy.yaml` |
+| [Networking](https://www.js-on-k8s.dev/recipes/networking/) | `k8s/base/service.yaml`, `ingress.yaml`, `networkpolicy.yaml`, `k8s/gateway-api/` |
 | [Zero-downtime rollouts](https://www.js-on-k8s.dev/recipes/zero-downtime-rollouts/) | `strategy`, `topologySpreadConstraints`, `k8s/base/pdb.yaml` |
-| [Kustomize](https://www.js-on-k8s.dev/recipes/kustomize/) | `k8s/base/`, `k8s/overlays/` |
-| [Helm chart](https://www.js-on-k8s.dev/recipes/helm-chart/) | `chart/` |
+| [Kustomize](https://www.js-on-k8s.dev/recipes/manifests/kustomize/) | `k8s/base/`, `k8s/overlays/` |
+| [Helm chart](https://www.js-on-k8s.dev/recipes/manifests/helm-chart/) | `chart/` |
 
 ## Run locally
 

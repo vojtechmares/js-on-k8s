@@ -1,0 +1,23 @@
+# Platform-owned. Reference only: the platform team creates this once and
+# grants namespaces the right to attach routes. Not part of the app deployment.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: public
+  namespace: gateway-system
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.example.com"
+      tls:
+        certificateRefs:
+          - name: wildcard-example-com
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: "true"

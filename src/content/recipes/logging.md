@@ -39,4 +39,4 @@ you add it. Use `pino-pretty` only on your laptop.
 - Put the request ID in every line of a request. Read it from the `traceparent` or
   `x-request-id` header set by your ingress.
 - Do not write log files. The container has a
-  [read-only root filesystem](/recipes/deployment/) and files vanish with the Pod.
+  [read-only root filesystem](/recipes/manifests/) and files vanish with the Pod.
