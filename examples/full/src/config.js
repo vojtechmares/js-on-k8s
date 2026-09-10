@@ -14,6 +14,8 @@ export const config = {
   // Uncomment when the service gets a database:
   // databaseUrl: required("DATABASE_URL"),
   shutdownTimeoutMs: Number(process.env.SHUTDOWN_TIMEOUT_MS ?? 10_000),
+  maxInFlight: Number(process.env.MAX_IN_FLIGHT ?? 200),
+  maxLoopLagMs: Number(process.env.MAX_LOOP_LAG_MS ?? 200),
 };
 
 export { required };

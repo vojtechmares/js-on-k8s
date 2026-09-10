@@ -1,7 +1,7 @@
 ---
 title: A minimal Helm chart
 description: A chart with one Deployment, one Service, a PDB and a values file with only the knobs you actually turn.
-order: 16
+order: 18
 tags: [helm, chart, packaging]
 updated: 2026-09-10
 example: examples/full/chart
@@ -19,7 +19,7 @@ image:
 replicaCount: 2
 port: 3000
 resources:
-  requests: { cpu: 100m, memory: 256Mi }
+  requests: { cpu: "1", memory: 256Mi }
   limits: { memory: 256Mi }
 env:
   LOG_LEVEL: info

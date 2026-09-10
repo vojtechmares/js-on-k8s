@@ -1,7 +1,7 @@
 ---
 title: Log JSON lines to stdout
 description: One JSON object per line on stdout. No files, no log rotation, no agents inside the container.
-order: 13
+order: 14
 tags: [logging, observability, pino]
 updated: 2026-09-10
 example: examples/full/src/log.js

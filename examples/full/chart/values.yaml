@@ -5,7 +5,7 @@ replicaCount: 2
 port: 3000
 resources:
   requests:
-    cpu: 100m
+    cpu: "1"
     memory: 256Mi
   limits:
     memory: 256Mi

@@ -6,6 +6,7 @@
 // - JSON logs on stdout, configuration from the environment
 
 import { createServer } from "node:http";
+import { monitorEventLoopDelay } from "node:perf_hooks";
 import { config } from "./config.js";
 import { createLogger } from "./log.js";
 
@@ -14,6 +15,14 @@ const log = createLogger(config.logLevel);
 let ready = false;
 let shuttingDown = false;
 let inFlight = 0;
+
+// Overload protection: shed requests and fail readiness when the event loop
+// falls behind or too many requests are in flight.
+// Recipe: https://www.js-on-k8s.dev/recipes/probes/
+const loop = monitorEventLoopDelay({ resolution: 20 });
+loop.enable();
+const overloaded = () =>
+  inFlight > config.maxInFlight || loop.percentile(99) / 1e6 > config.maxLoopLagMs;
 
 const PROBE_PATHS = new Set(["/healthz", "/readyz"]);
 
@@ -26,9 +35,16 @@ function handler(req, res) {
     return;
   }
 
-  // Readiness: dependencies are up and we are not shutting down.
+  // Readiness: initialised, not shutting down, not overloaded.
   if (url.pathname === "/readyz") {
-    res.writeHead(ready ? 200 : 503, { "content-type": "text/plain" }).end(ready ? "ready" : "not ready");
+    const ok = ready && !overloaded();
+    res.writeHead(ok ? 200 : 503, { "content-type": "text/plain" }).end(ok ? "ready" : "not ready");
+    return;
+  }
+
+  // Shed excess load before doing any work.
+  if (overloaded()) {
+    res.writeHead(503, { "content-type": "text/plain", "retry-after": "1" }).end("overloaded");
     return;
   }
 

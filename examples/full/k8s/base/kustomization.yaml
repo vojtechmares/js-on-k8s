@@ -4,6 +4,8 @@ resources:
   - deployment.yaml
   - service.yaml
   - pdb.yaml
+  - ingress.yaml
+  - networkpolicy.yaml
 configMapGenerator:
   - name: app
     literals:

@@ -1,14 +1,14 @@
 ---
 title: Zero-downtime rolling updates
 description: Rolling update strategy, a PodDisruptionBudget and spread across nodes so a deploy never drops requests.
-order: 14
+order: 16
 tags: [rollout, pdb, availability]
 updated: 2026-09-10
 example: examples/full/k8s/base
 ---
 
 With [graceful shutdown](/recipes/graceful-shutdown/) and
-[readiness probes](/recipes/health-checks/) in place, the last piece is telling the
+[readiness probes](/recipes/probes/) in place, the last piece is telling the
 scheduler how many Pods may be unavailable at any time. The answer is zero.
 
 ## Strategy

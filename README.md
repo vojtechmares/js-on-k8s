@@ -15,6 +15,7 @@ examples/frameworks/<name>/    graceful shutdown with Express, Fastify, Hono, El
 examples/nextjs/               Next.js standalone output in a distroless image
 examples/tanstack-start/       TanStack Start with the Nitro node-server preset
 examples/private-packages/     NPM_TOKEN as a BuildKit secret
+examples/telemetry/            OpenTelemetry zero-code and manual setup
 ```
 
 ## Develop

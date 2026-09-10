@@ -44,7 +44,7 @@ spec:
               value: production
           resources:
             requests:
-              cpu: 100m
+              cpu: "1"
               memory: 256Mi
             limits:
               memory: 256Mi
@@ -87,5 +87,5 @@ spec:
 - `readOnlyRootFilesystem: true` works with Node.js as long as you do not write to disk.
   Mount an `emptyDir` at `/tmp` if a library needs it.
 - Memory limit equals memory request. See [memory and CPU](/recipes/memory-and-cpu/) for why.
-- No CPU limit. Node.js is single-threaded per process; throttling makes latency worse, not fairer.
+- One full CPU requested, no CPU limit. Less than that throttles Node.js under load; see [memory and CPU](/recipes/memory-and-cpu/).
 - Expose through an Ingress or Gateway of your choice. The Service is all the app needs to know about.

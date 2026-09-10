@@ -1,7 +1,7 @@
 ---
 title: Configuration from the environment
 description: Build one image, promote it through environments, and read every setting from env vars.
-order: 12
+order: 13
 tags: [configmap, secret, twelve-factor]
 updated: 2026-09-10
 example: examples/full/k8s/base

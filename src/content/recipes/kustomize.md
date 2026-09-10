@@ -1,7 +1,7 @@
 ---
 title: Kustomize base and overlays
 description: One base with the manifests, one overlay per environment that changes only the image tag, replicas and config.
-order: 15
+order: 17
 tags: [kustomize, manifests, environments]
 updated: 2026-09-10
 example: examples/full/k8s
