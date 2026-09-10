@@ -29,8 +29,9 @@ function parseAccept(header: string | null): MediaRange[] {
       for (const p of params) {
         const [k, v] = p.trim().split('=');
         if (k === 'q' && v !== undefined) {
-          const n = Number.parseFloat(v);
-          q = Number.isNaN(n) ? 0 : Math.min(1, Math.max(0, n));
+          const n = Number(v);
+          // Malformed q values are ignored, as in the reference implementation.
+          if (!Number.isNaN(n)) q = Math.min(1, Math.max(0, n));
         }
       }
       return { type, subtype, q, index };
@@ -74,9 +75,20 @@ function markdownCandidates(pathname: string): string[] {
   return [`${trimmed}.md`, `${trimmed}/index.md`];
 }
 
+function appendVaryAccept(headers: Headers): void {
+  const existing = headers.get('Vary');
+  if (!existing) {
+    headers.set('Vary', 'Accept');
+    return;
+  }
+  const tokens = existing.split(',').map((s) => s.trim().toLowerCase());
+  if (!tokens.includes('accept') && !tokens.includes('*')) headers.set('Vary', `${existing}, Accept`);
+}
+
 function withHeaders(res: Response, headers: Record<string, string>): Response {
   const out = new Response(res.body, res);
   for (const [k, v] of Object.entries(headers)) out.headers.set(k, v);
+  appendVaryAccept(out.headers);
   return out;
 }
 
@@ -99,7 +111,6 @@ export default {
           return withHeaders(res, {
             'Content-Type': 'text/markdown; charset=utf-8',
             'Content-Location': mdUrl.pathname,
-            Vary: 'Accept',
           });
         }
       }
@@ -108,11 +119,11 @@ export default {
 
     const res = await env.ASSETS.fetch(request);
     const type = res.headers.get('content-type') ?? '';
-    if (url.pathname.endsWith('.md')) {
-      return withHeaders(res, { 'Content-Type': 'text/markdown; charset=utf-8', Vary: 'Accept' });
+    if (res.ok && url.pathname.endsWith('.md')) {
+      return withHeaders(res, { 'Content-Type': 'text/markdown; charset=utf-8' });
     }
     if (type.startsWith('text/html')) {
-      return withHeaders(res, { Vary: 'Accept' });
+      return withHeaders(res, {});
     }
     return res;
   },
