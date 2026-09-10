@@ -1,7 +1,7 @@
 ---
 title: A minimal Helm chart
 description: A chart with one Deployment, one Service, a PDB and a values file with only the knobs you actually turn.
-order: 13
+order: 21
 tags: [helm, chart, packaging]
 updated: 2026-09-10
 example: examples/full/chart

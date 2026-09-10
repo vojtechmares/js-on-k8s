@@ -1,0 +1,11 @@
+{
+  "name": "js-on-k8s-fastify",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "fastify": "^5.12.1"
+  }
+}

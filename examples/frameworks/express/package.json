@@ -1,0 +1,11 @@
+{
+  "name": "js-on-k8s-express",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

@@ -1,7 +1,7 @@
 ---
 title: Distroless instead of Alpine or Debian slim
 description: Ship the Node.js runtime and your app, nothing else. No shell, no package manager, non-root.
-order: 5
+order: 11
 tags: [dockerfile, security, distroless]
 updated: 2026-09-10
 example: examples/full/Dockerfile

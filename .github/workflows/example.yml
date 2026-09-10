@@ -1,11 +1,11 @@
-name: example
+name: examples
 
 on:
   push:
     branches: [main]
-    paths: ['examples/**']
+    paths: ['examples/**', '.github/workflows/example.yml']
   pull_request:
-    paths: ['examples/**']
+    paths: ['examples/**', '.github/workflows/example.yml']
 
 jobs:
   full:
@@ -29,12 +29,41 @@ jobs:
           kill -TERM "$(cat app.pid)"
           wait "$(cat app.pid)" || true
           test "$(cat slow.out)" = done
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
-        with:
-          context: examples/full
-          push: false
-          tags: js-on-k8s-example:ci
       - uses: azure/setup-helm@v4
       - run: helm lint ./chart
       - run: kubectl kustomize k8s/overlays/production > /dev/null
+
+  images:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        context:
+          - examples/full
+          - examples/frameworks/express
+          - examples/frameworks/fastify
+          - examples/frameworks/hono
+          - examples/frameworks/elysia
+          - examples/frameworks/nestjs
+          - examples/nextjs
+          - examples/tanstack-start
+          - examples/private-packages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: false
+          load: true
+          tags: example:ci
+          secrets: |
+            NPM_TOKEN=ci-placeholder
+      - name: Start, probe, stop
+        run: |
+          docker run -d --rm --name app -p 3000:3000 example:ci
+          for i in $(seq 1 20); do curl -sf localhost:3000/healthz && break; sleep 1; done
+          curl -sf localhost:3000/healthz
+          start=$(date +%s)
+          docker stop -t 30 app
+          test $(( $(date +%s) - start )) -lt 10

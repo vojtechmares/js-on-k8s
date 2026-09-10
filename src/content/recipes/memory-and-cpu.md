@@ -1,7 +1,7 @@
 ---
 title: Memory limits and the V8 heap
 description: Set the container memory limit and tell V8 about it, or get OOM-killed before the garbage collector tries.
-order: 8
+order: 16
 tags: [resources, memory, v8, oomkilled]
 updated: 2026-09-10
 example: examples/full/k8s/base/deployment.yaml

@@ -11,6 +11,10 @@ src/pages/                     Astro routes: HTML pages and their .md twins, llm
 src/layouts/Base.astro         shell, SEO tags, JSON-LD
 worker/index.ts                Cloudflare Worker: Accept: text/markdown negotiation, apex redirect
 examples/full/                 every recipe applied to one small HTTP service
+examples/frameworks/<name>/    graceful shutdown with Express, Fastify, Hono, Elysia, NestJS
+examples/nextjs/               Next.js standalone output in a distroless image
+examples/tanstack-start/       TanStack Start with the Nitro node-server preset
+examples/private-packages/     NPM_TOKEN as a BuildKit secret
 ```
 
 ## Develop

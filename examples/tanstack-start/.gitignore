@@ -1,0 +1,4 @@
+.output/
+.nitro/
+dist/
+src/routeTree.gen.ts
