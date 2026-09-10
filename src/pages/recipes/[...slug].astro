@@ -97,7 +97,7 @@ const jsonLd = [
     </ul>
     <p class="text-xs text-zinc-500">
       Updated {updated.toISOString().slice(0, 10)}
-      {recipe.data.tags.length > 0 && <> &middot; tags: {recipe.data.tags.join(', ')}</>}
+      {recipe.data.tags.length > 0 && <> &middot; tags: {recipe.data.tags.join(', ')}</>}{' '}
       &middot; <a href={`${SITE.repo}/blob/main/src/content/recipes/${recipe.id}.md`} class="text-zinc-500" rel="noopener">edit on GitHub</a>
     </p>
   </article>

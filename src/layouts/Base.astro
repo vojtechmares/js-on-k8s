@@ -60,9 +60,9 @@ const year = new Date().getFullYear();
           <pre class="overflow-x-auto text-[7.5px] leading-none sm:text-[12px] md:text-[13px]" aria-hidden="true">{logo.trimEnd()}</pre>
         </a>
         <nav class="rule-double mt-4 text-sm" aria-label="Main">
-          <span class="text-zinc-400">[</span> <a href="/" class="underline underline-offset-4 hover:bg-blue-100">home</a> <span class="text-zinc-400">]</span>
-          <span class="text-zinc-400">[</span> <a href="/recipes/" class="underline underline-offset-4 hover:bg-blue-100">recipes</a> <span class="text-zinc-400">]</span>
-          <span class="text-zinc-400">[</span> <a href={SITE.repo} class="underline underline-offset-4 hover:bg-blue-100" rel="noopener">github</a> <span class="text-zinc-400">]</span>
+          <span class="text-zinc-400">[</span> <a href="/" class="underline underline-offset-4 hover:bg-blue-100">home</a> <span class="text-zinc-400">]</span>{' '}
+          <span class="text-zinc-400">[</span> <a href="/recipes/" class="underline underline-offset-4 hover:bg-blue-100">recipes</a> <span class="text-zinc-400">]</span>{' '}
+          <span class="text-zinc-400">[</span> <a href={SITE.repo} class="underline underline-offset-4 hover:bg-blue-100" rel="noopener">github</a> <span class="text-zinc-400">]</span>{' '}
           <span class="text-zinc-400">[</span> <a href={mdHref} class="underline underline-offset-4 hover:bg-blue-100" title="This page as Markdown">.md</a> <span class="text-zinc-400">]</span>
         </nav>
       </header>
@@ -74,9 +74,9 @@ const year = new Date().getFullYear();
       <footer class="mt-16 text-xs leading-6 text-zinc-500">
         <p class="rule-single" aria-hidden="true"></p>
         <p>
-          {SITE.short} &middot; &copy; {year} <a href={SITE.author.url} class="underline underline-offset-4" rel="author noopener">{SITE.author.name}</a>
-          &middot; <a href={SITE.repo} class="underline underline-offset-4" rel="noopener">source on GitHub</a>
-          &middot; <a href={mdHref} class="underline underline-offset-4">markdown</a>
+          {SITE.short} &middot; &copy; {year} <a href={SITE.author.url} class="underline underline-offset-4" rel="author noopener">{SITE.author.name}</a>{' '}
+          &middot; <a href={SITE.repo} class="underline underline-offset-4" rel="noopener">source on GitHub</a>{' '}
+          &middot; <a href={mdHref} class="underline underline-offset-4">markdown</a>{' '}
           &middot; <a href="/llms.txt" class="underline underline-offset-4">llms.txt</a>
         </p>
         <p>Agents: send <code>Accept: text/markdown</code> to any page URL to get its Markdown source.</p>
