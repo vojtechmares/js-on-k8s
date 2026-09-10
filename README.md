@@ -64,6 +64,21 @@ Astro builds the `.md` files; the Worker in `worker/index.ts` picks them when
 `text/markdown` outranks `text/html` in the `Accept` header (RFC 9110 quality values,
 `q=0` respected, ties broken by client order). Responses carry `Vary: Accept`.
 
+## Smoke tests
+
+`tests/*.hurl` are [Hurl](https://hurl.dev) files that check the contract of the site: browsers
+get HTML, agents get Markdown, redirects and SEO files behave.
+
+```sh
+pnpm smoke          # against production
+pnpm preview        # in one terminal, then in another:
+pnpm smoke:local    # against the local Worker
+```
+
+CI runs the local suite on every push and pull request. After a push to `main`,
+`.github/workflows/smoke.yml` waits until `/version.txt` on the live site reports
+that commit, then runs the suite against production, and again daily.
+
 ## Deploy
 
 The site is a Cloudflare Worker with static assets. `wrangler.jsonc` declares

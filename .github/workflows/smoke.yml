@@ -1,0 +1,26 @@
+# After Cloudflare Workers Builds deploys a push to main, wait until the live site
+# serves that commit, then run the smoke tests against production.
+name: smoke
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: smoke
+  cancel-in-progress: true
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gacts/install-hurl@v1
+      - name: Wait for the deploy of this commit
+        if: github.event_name == 'push'
+        run: hurl --test --variable base=https://www.js-on-k8s.dev --variable sha=${{ github.sha }} tests/version.hurl
+      - name: Smoke test production
+        run: hurl --test --variable base=https://www.js-on-k8s.dev tests/smoke.hurl tests/domains.hurl

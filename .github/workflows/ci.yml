@@ -28,3 +28,9 @@ jobs:
           test -f dist/recipes/graceful-shutdown.md
           grep -q 'text/markdown' dist/index.html
           pnpm exec wrangler deploy --dry-run --outdir /tmp/wd > /dev/null
+      - uses: gacts/install-hurl@v1
+      - name: Smoke test against a local preview
+        run: |
+          pnpm exec wrangler dev --port 8787 > wrangler.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf -o /dev/null http://localhost:8787/ && break; sleep 1; done
+          hurl --test --variable base=http://localhost:8787 tests/smoke.hurl

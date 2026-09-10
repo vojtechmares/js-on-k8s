@@ -12,7 +12,9 @@
     "check": "tsc -p worker/tsconfig.json",
     "deploy": "astro build && wrangler deploy",
     "og": "node scripts/og.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "smoke": "hurl --test --variable base=https://www.js-on-k8s.dev tests/smoke.hurl tests/domains.hurl",
+    "smoke:local": "hurl --test --variable base=http://localhost:8787 tests/smoke.hurl"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
