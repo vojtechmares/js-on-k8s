@@ -1,7 +1,8 @@
 /**
- * Serves the static Astro build from Workers Static Assets and adds content
- * negotiation: a request with `Accept: text/markdown` (ranked above text/html)
- * gets the Markdown source of the page instead of the HTML.
+ * Runs only for HTML page URLs (see `run_worker_first` in wrangler.jsonc) and
+ * adds content negotiation: a request with `Accept: text/markdown` (ranked
+ * above text/html) gets the Markdown source of the page instead of the HTML.
+ * Static files and the .md twins are served directly from the asset store.
  *
  * Every HTML page has a Markdown twin built by Astro:
  *   /              -> /index.md
@@ -121,7 +122,7 @@ export default {
 
     const isRead = request.method === 'GET' || request.method === 'HEAD';
 
-    if (isRead && !url.pathname.endsWith('.md') && prefersMarkdown(request.headers.get('accept'))) {
+    if (isRead && prefersMarkdown(request.headers.get('accept'))) {
       for (const candidate of markdownCandidates(url.pathname)) {
         const mdUrl = new URL(candidate, url);
         const res = await env.ASSETS.fetch(new Request(mdUrl, { method: request.method, headers: request.headers }));
@@ -139,9 +140,6 @@ export default {
     const type = res.headers.get('content-type') ?? '';
     // Preview URLs and any other host: serve, but keep search engines on the canonical host.
     const extra: Record<string, string> = url.hostname === CANONICAL_HOST ? {} : { 'X-Robots-Tag': 'noindex' };
-    if (res.ok && url.pathname.endsWith('.md')) {
-      return withHeaders(res, { 'Content-Type': 'text/markdown; charset=utf-8', ...extra });
-    }
     if (type.startsWith('text/html')) {
       return withHeaders(res, { 'Content-Type': 'text/html; charset=utf-8', ...extra });
     }

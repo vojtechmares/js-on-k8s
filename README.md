@@ -9,7 +9,8 @@ src/content/pages/index.md     home page content (Markdown)
 src/content/recipes/*.md       one recipe per file (Markdown + frontmatter)
 src/pages/                     Astro routes: HTML pages and their .md twins, llms.txt
 src/layouts/Base.astro         shell, SEO tags, JSON-LD
-worker/index.ts                Cloudflare Worker: Accept: text/markdown negotiation, apex redirect
+worker/index.ts                Cloudflare Worker for HTML URLs: Accept: text/markdown negotiation, apex redirect
+public/_headers                headers for files served directly from the asset store
 examples/full/                 every recipe applied to one small HTTP service
 examples/frameworks/<name>/    graceful shutdown with Express, Fastify, Hono, Elysia, NestJS
 examples/nextjs/               Next.js standalone output in a distroless image
@@ -82,9 +83,15 @@ that commit, then runs the suite against production, and again daily.
 ## Deploy
 
 The site is a Cloudflare Worker with static assets. `wrangler.jsonc` declares
-`js-on-k8s.dev` and `js-on-k8s.dev` as custom domains, so the first deploy
+`js-on-k8s.dev` and `www.js-on-k8s.dev` as custom domains, so the first deploy
 creates the DNS records and certificates in the zone automatically. `www`
 redirects to the apex; `workers.dev` is disabled.
+
+The Worker only runs for HTML page URLs (`run_worker_first` patterns), where it
+negotiates on the Accept header. Everything else, including the `.md` twins,
+`/_astro/*` and the files in `public/`, is served directly from the asset store
+without a Worker invocation; `public/_headers` sets their caching and content
+type headers.
 
 Deploys run on Cloudflare Workers Builds, connected to this GitHub repository:
 every push to `main` builds with `pnpm build` and runs `wrangler deploy`, and

@@ -100,6 +100,24 @@ GET {{base}}/this-page-does-not-exist/
 Accept: text/markdown
 HTTP 404
 
+# --- Static assets served without the Worker ----------------------------------
+GET {{base}}/
+HTTP 200
+[Captures]
+css: xpath "string(//link[@rel='stylesheet'][1]/@href)"
+
+GET {{base}}{{css}}
+HTTP 200
+[Asserts]
+header "Content-Type" contains "text/css"
+header "Cache-Control" == "public, max-age=31536000, immutable"
+
+GET {{base}}/recipes/graceful-shutdown.md
+HTTP 200
+[Asserts]
+header "Content-Type" == "text/markdown; charset=utf-8"
+header "X-Content-Type-Options" == "nosniff"
+
 # --- SEO and agent discovery files --------------------------------------------
 GET {{base}}/robots.txt
 HTTP 200
