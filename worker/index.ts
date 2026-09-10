@@ -96,7 +96,8 @@ export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
 
-    if (REDIRECT_HOSTS.has(url.hostname) || url.protocol === 'http:') {
+    const isSiteHost = url.hostname === CANONICAL_HOST || REDIRECT_HOSTS.has(url.hostname);
+    if (REDIRECT_HOSTS.has(url.hostname) || (isSiteHost && url.protocol === 'http:')) {
       if (REDIRECT_HOSTS.has(url.hostname)) url.hostname = CANONICAL_HOST;
       url.protocol = 'https:';
       return Response.redirect(url.toString(), 301);
