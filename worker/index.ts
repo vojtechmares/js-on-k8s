@@ -92,12 +92,28 @@ function withHeaders(res: Response, headers: Record<string, string>): Response {
   return out;
 }
 
+function visitorSchemeOf(request: Request): string | undefined {
+  const cfVisitor = request.headers.get('cf-visitor');
+  if (cfVisitor) {
+    try {
+      const scheme = (JSON.parse(cfVisitor) as { scheme?: string }).scheme;
+      if (scheme) return scheme;
+    } catch {
+      // fall through
+    }
+  }
+  return request.headers.get('x-forwarded-proto') ?? undefined;
+}
+
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
 
+    // The visitor's scheme as seen by the edge. Absent under `wrangler dev`, which
+    // also rewrites the URL to the custom domain, so url.protocol cannot be trusted there.
+    const visitorScheme = visitorSchemeOf(request);
     const isSiteHost = url.hostname === CANONICAL_HOST || REDIRECT_HOSTS.has(url.hostname);
-    if (REDIRECT_HOSTS.has(url.hostname) || (isSiteHost && url.protocol === 'http:')) {
+    if (REDIRECT_HOSTS.has(url.hostname) || (isSiteHost && visitorScheme === 'http')) {
       if (REDIRECT_HOSTS.has(url.hostname)) url.hostname = CANONICAL_HOST;
       url.protocol = 'https:';
       return Response.redirect(url.toString(), 301);
