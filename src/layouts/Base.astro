@@ -54,6 +54,10 @@ const year = new Date().getFullYear();
     <meta name="twitter:image" content={ogImage} />
 
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+
+    <!-- Fathom - beautiful, simple website analytics -->
+    <script is:inline src="https://cdn.usefathom.com/script.js" data-site="GPVTJXAI" defer></script>
+    <!-- / Fathom -->
   </head>
   <body class="min-h-screen">
     <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
