@@ -1,7 +1,7 @@
 ---
 title: Private packages with Docker build secrets
 description: Pass NPM_TOKEN as a BuildKit secret. Never put it in an ARG, an ENV, or a copied .npmrc.
-order: 10
+order: 5
 tags: [dockerfile, npm, secrets, private-registry]
 updated: 2026-09-10
 example: examples/private-packages

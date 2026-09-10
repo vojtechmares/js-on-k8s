@@ -1,7 +1,7 @@
 ---
 title: Zero-downtime rolling updates
 description: Rolling update strategy, a PodDisruptionBudget and spread across nodes so a deploy never drops requests.
-order: 19
+order: 14
 tags: [rollout, pdb, availability]
 updated: 2026-09-10
 example: examples/full/k8s/base

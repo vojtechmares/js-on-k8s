@@ -1,7 +1,7 @@
 ---
 title: Build an image with Cloud Native Buildpacks
 description: Get a production Node.js image without writing a Dockerfile, using pack and Paketo.
-order: 12
+order: 7
 tags: [buildpacks, paketo, build]
 updated: 2026-09-10
 example: examples/full/project.toml

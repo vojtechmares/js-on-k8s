@@ -1,7 +1,7 @@
 ---
 title: Containerize a TanStack Start app with Nitro
 description: Add the Nitro Vite plugin, build a node-server bundle into .output, and run the entry with node in a distroless image.
-order: 14
+order: 9
 tags: [tanstack, react, nitro, vite, dockerfile]
 updated: 2026-09-10
 example: examples/tanstack-start

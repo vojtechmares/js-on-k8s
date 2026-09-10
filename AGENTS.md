@@ -16,6 +16,7 @@ Source of https://www.js-on-k8s.dev - a single-page docs site plus recipes about
 - One recipe = one thing. Snippet first, explanation after, a short "Notes" list at the end. Fits on a screen.
 - Every HTML route needs a `.md` twin (`src/pages/**/*.md.ts`) so `Accept: text/markdown` works.
 - Recipe frontmatter: `title`, `description`, `order`, `tags`, `updated`, optional `example` (path in repo).
+- Nested recipes live in `src/content/recipes/<parent>/<child>.md`; `order` sorts within the parent.
 
 ## Commands
 

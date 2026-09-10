@@ -1,18 +1,27 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { recipeUrl } from '../lib/site';
+import { isChild, type Recipe } from '../lib/markdown';
 
 interface Props {
-  recipes: CollectionEntry<'recipes'>[];
+  recipes: Recipe[];
 }
 const { recipes } = Astro.props;
+
+// Number top-level recipes; children hang below their parent with an ASCII branch.
+let n = 0;
+const rows = recipes.map((r, i) => {
+  const child = isChild(r);
+  if (!child) n++;
+  const last = child && (i === recipes.length - 1 || !isChild(recipes[i + 1]));
+  return { r, child, label: child ? (last ? '└─' : '├─') : String(n).padStart(2, '0') };
+});
 ---
 
-<ol class="space-y-3 text-[0.9375rem] leading-7">
+<ol class="space-y-2 text-[0.9375rem] leading-7">
   {
-    recipes.map((r, i) => (
-      <li class="flex gap-3">
-        <span class="w-6 shrink-0 text-right text-zinc-400" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+    rows.map(({ r, child, label }) => (
+      <li class:list={['flex gap-3', child && 'pl-9']}>
+        <span class="w-6 shrink-0 text-right text-zinc-400" aria-hidden="true">{label}</span>
         <span>
           <a href={recipeUrl(r.id)} class="text-blue-700 underline underline-offset-4 hover:bg-blue-100">
             {r.data.title}

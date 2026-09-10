@@ -1,7 +1,7 @@
 ---
 title: A minimal multi-stage Dockerfile
 description: Install with npm ci, build in one stage, copy only what runs into the final image.
-order: 9
+order: 4
 tags: [dockerfile, docker, build]
 updated: 2026-09-10
 example: examples/full/Dockerfile

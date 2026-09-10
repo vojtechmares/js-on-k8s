@@ -1,7 +1,7 @@
 ---
 title: Liveness, readiness and startup probes
 description: Separate "is the process alive" from "can it take traffic", and flip readiness first on shutdown.
-order: 8
+order: 3
 tags: [probes, http, kubernetes]
 updated: 2026-09-10
 example: examples/full/src/server.js

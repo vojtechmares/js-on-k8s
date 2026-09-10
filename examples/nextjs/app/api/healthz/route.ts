@@ -1,5 +1,4 @@
-// Liveness endpoint. Readiness is handled by the preStop sleep and the
-// server's own SIGTERM handling; see the recipe.
+// Liveness endpoint. Readiness lives in app/api/readyz.
 export const dynamic = "force-dynamic";
 
 export function GET() {

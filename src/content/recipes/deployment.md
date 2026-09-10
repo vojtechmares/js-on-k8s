@@ -1,7 +1,7 @@
 ---
 title: A Deployment and Service for a Node.js app
 description: The baseline manifest with probes, resources, security context and a stable port name.
-order: 15
+order: 10
 tags: [kubernetes, deployment, service, manifests]
 updated: 2026-09-10
 example: examples/full/k8s/base

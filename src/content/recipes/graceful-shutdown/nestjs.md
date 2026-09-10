@@ -1,7 +1,7 @@
 ---
 title: Graceful shutdown with NestJS
 description: Turn on enableShutdownHooks() and use the lifecycle hooks to flip readiness and close resources in order.
-order: 7
+order: 5
 tags: [nestjs, signals, shutdown]
 updated: 2026-09-10
 example: examples/frameworks/nestjs

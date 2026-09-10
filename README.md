@@ -43,6 +43,9 @@ example: examples/full/path/to/file   # optional, linked from the page
 ```
 
 The page is generated at `/recipes/<slug>/` and its Markdown twin at `/recipes/<slug>.md`.
+To nest a recipe under another one, put it in a folder named after the parent slug
+(`src/content/recipes/graceful-shutdown/express.md`). It is listed under the parent,
+ordered by its own `order`, and served at `/recipes/graceful-shutdown/express/`.
 Keep it to one screen, put the copy-paste snippet first, explanations after.
 
 ## Markdown for agents

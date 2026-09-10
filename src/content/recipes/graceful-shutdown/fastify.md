@@ -1,7 +1,7 @@
 ---
 title: Graceful shutdown with Fastify
 description: Use app.close() with forceCloseConnections and onClose hooks, and listen on 0.0.0.0.
-order: 4
+order: 2
 tags: [fastify, signals, shutdown]
 updated: 2026-09-10
 example: examples/frameworks/fastify

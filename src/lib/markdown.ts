@@ -1,24 +1,53 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { SITE, FULL_EXAMPLE_URL, exampleUrl, recipeUrl } from './site';
 
+export type Recipe = CollectionEntry<'recipes'>;
+
 export const MARKDOWN_HEADERS = {
   'Content-Type': 'text/markdown; charset=utf-8',
   Vary: 'Accept',
 };
 
-export async function sortedRecipes(): Promise<CollectionEntry<'recipes'>[]> {
-  const all = await getCollection('recipes');
-  return all.sort((a, b) => a.data.order - b.data.order);
+export function parentId(recipe: Recipe): string | null {
+  const i = recipe.id.lastIndexOf('/');
+  return i === -1 ? null : recipe.id.slice(0, i);
 }
 
-export function recipeListMarkdown(recipes: CollectionEntry<'recipes'>[]): string {
+export function isChild(recipe: Recipe): boolean {
+  return parentId(recipe) !== null;
+}
+
+/** Depth-first order: each top-level recipe followed by its children. */
+export async function sortedRecipes(): Promise<Recipe[]> {
+  const all = await getCollection('recipes');
+  const byId = new Map(all.map((r) => [r.id, r]));
+  const key = (r: Recipe): [number, number] => {
+    const p = parentId(r);
+    if (p === null) return [r.data.order, 0];
+    const parent = byId.get(p);
+    if (!parent) throw new Error(`Recipe ${r.id} has no parent ${p}`);
+    return [parent.data.order, r.data.order];
+  };
+  return all.sort((a, b) => {
+    const [a0, a1] = key(a);
+    const [b0, b1] = key(b);
+    return a0 - b0 || a1 - b1;
+  });
+}
+
+export function childrenOf(recipe: Recipe, all: Recipe[]): Recipe[] {
+  return all.filter((r) => parentId(r) === recipe.id);
+}
+
+export function recipeListMarkdown(recipes: Recipe[]): string {
   return recipes
-    .map((r) => `- [${r.data.title}](${SITE.url}${recipeUrl(r.id)}) - ${r.data.description}`)
+    .map((r) => `${isChild(r) ? '  ' : ''}- [${r.data.title}](${SITE.url}${recipeUrl(r.id)}) - ${r.data.description}`)
     .join('\n');
 }
 
-export function recipeMarkdown(recipe: CollectionEntry<'recipes'>): string {
+export function recipeMarkdown(recipe: Recipe, all: Recipe[]): string {
   const url = `${SITE.url}${recipeUrl(recipe.id)}`;
+  const parent = parentId(recipe);
   const lines = [
     `# ${recipe.data.title}`,
     '',
@@ -28,9 +57,15 @@ export function recipeMarkdown(recipe: CollectionEntry<'recipes'>): string {
     `- Site: ${SITE.name} (${SITE.url})`,
     `- Updated: ${recipe.data.updated.toISOString().slice(0, 10)}`,
   ];
+  if (parent) lines.push(`- Part of: ${SITE.url}${recipeUrl(parent)}`);
   if (recipe.data.tags.length) lines.push(`- Tags: ${recipe.data.tags.join(', ')}`);
   if (recipe.data.example) lines.push(`- Example: ${exampleUrl(recipe.data.example)}`);
-  lines.push(`- Full example: ${FULL_EXAMPLE_URL}`, '', recipe.body ?? '', '');
+  lines.push(`- Full example: ${FULL_EXAMPLE_URL}`, '', recipe.body ?? '');
+  const children = childrenOf(recipe, all);
+  if (children.length) {
+    lines.push('', '## In this section', '', recipeListMarkdown(children).replace(/^ {2}/gm, ''));
+  }
+  lines.push('');
   return lines.join('\n');
 }
 

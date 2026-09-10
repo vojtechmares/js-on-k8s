@@ -1,7 +1,7 @@
 ---
 title: Graceful shutdown with Hono
 description: Hono is runtime-agnostic. Close the server the adapter gave you, on Node or on Bun.
-order: 5
+order: 3
 tags: [hono, signals, shutdown, bun]
 updated: 2026-09-10
 example: examples/frameworks/hono

@@ -1,7 +1,7 @@
 ---
 title: Containerize a Next.js app
 description: Build with output standalone, copy three folders into a distroless image, run server.js directly.
-order: 13
+order: 8
 tags: [nextjs, react, dockerfile, standalone]
 updated: 2026-09-10
 example: examples/nextjs

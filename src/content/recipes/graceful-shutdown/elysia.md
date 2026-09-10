@@ -1,7 +1,7 @@
 ---
 title: Graceful shutdown with Elysia
 description: Elysia runs on Bun. Call app.stop() on SIGTERM and ship it in the Bun distroless image.
-order: 6
+order: 4
 tags: [elysia, bun, signals, shutdown]
 updated: 2026-09-10
 example: examples/frameworks/elysia

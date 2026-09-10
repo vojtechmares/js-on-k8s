@@ -1,7 +1,7 @@
 ---
 title: Graceful shutdown with Express
 description: app.listen() returns a plain Node.js http.Server. Close that, not the app.
-order: 3
+order: 1
 tags: [express, signals, shutdown]
 updated: 2026-09-10
 example: examples/frameworks/express
